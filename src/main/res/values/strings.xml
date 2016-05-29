@@ -1,0 +1,202 @@
+<resources>
+    <string name="app_name">Klimastatistik</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_stationen">Stationen</string>
+    <string name="action_info">Info</string>
+    <string name="action_help">Hilfe</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="updateStat">Station aktualisieren</string>
+    <string name="updateAll">alle aktualisieren</string>
+    <string name="import_station">importieren</string>
+    <string name="local_station">nahegelegene</string>
+    <string name="ok">OK</string>
+
+    <string-array name="contentPages">
+        <item>Mittelwerte</item>
+        <item>Extremwerte</item>
+        <item>Historie</item>
+        <item>Temperatur Jahresverlauf</item>
+        <item>Phänomene Jahresverlauf</item>
+        <item>Thermopluviogramm Vergleich</item>
+        <item>Trend Temperatur</item>
+        <item>Sommer</item>
+        <item>Winter</item>
+        <item>Heizung/Jahr</item>
+        <item>Heizung/Winter</item>
+        <item>Heizung/Monate</item>
+    </string-array>
+
+    <string-array name="contentClasses">
+        <item>MittelHandler</item>
+        <item>ExtremeHandler</item>
+        <item>HistorieHandler</item>
+        <item>JahresViewTemp</item>
+        <item>JahresViewPhen</item>
+        <item>ThermoPluvi</item>
+        <item>TrendView</item>
+        <item>SommerTable</item>
+        <item>WinterTable</item>
+        <item>GradtageTable</item>
+        <item>GradtageTable</item>
+        <item>GradtageTable</item>
+    </string-array>
+
+    <string name="mittel_help">
+    Die Mittelwerte beziehen sich auf die in den Einstellungen ausgewählte Periode
+        (1961-90, 1981-2010 oder alle Jahre, für die die ausgewählte Station Daten hat).  Nicht alle Stationen
+        bieten für den Zeitraum lückenlose Daten. Dies gilt besonders für die Sonnenscheinstunden.\n
+
+        Bei den Sonnenstunden und bei den Niederschlägen steht unter dem Monat die mittlere Monatssumme, die anderen
+        Mittel sind Mittel der Tageswerte. Die Bewölkung wird in Achteln angegeben\n
+
+        Die Verteilung der Tagesmitteltemperaturen zeigt, an wie vielen Tagen welcher Wert in der Beobachtungsperiode
+        aufgetreten ist und in welchem Bereich sich die Tagesmittel bewegen. Die Häufigkeit wird in 1°C-Intervallen
+        gezählt. Das arithmetische Mittel der Tagesmitteltemperaturen liegt nicht immer im häufigsten Teilintervall.
+        Wenn man das Diagramm antippt, werden die Häufigkeiten in einer Tabelle angezeigt.\n
+        Heitere Tage sind solche mit einer vom Monat abhängigen minimalen Zahl an Sonnenstunden (Dez: 6, Juni 13). An
+        trüben Tagen scheint die Sonne höchstens eine Stunde.
+
+        Bei den Wetterlagen wird die Strömungsrichtung (aus NW, NO, SO, SW oder ohne) und der Charakter (feucht-trocken)
+        unterschieden. Angegeben sind die Prozentsätze, an wie vielen Tagen im Beobachtungszeitraum die jeweilige
+        Wetterlage aufgetreten ist.\n
+        \n
+        Der auf dieser Seite eingestellte Tag (Tasten [--], [-], [+], [++], Tippen auf das Datum) gilt auch für die Extremwerte und die Historie
+        auf den nächsten beiden Seiten.
+
+    </string>
+
+        <string name="hist_help">
+        Die Mittelwerte auf dieser Seite beziehen sich auf das eingestellte Jahr. Nicht alle Stationen
+        bieten lückenlose Daten. Dies gilt besonders für die Sonnenscheinstunden.\n
+
+        Bei den Sonnenstunden und bei den Niederschlägen wird die Monatssumme angezeigt, wenn die Daten
+            für den Monat unvollständig sind, wird sie auf den ganzen Monat hochgerechnet.
+         Die anderen Mittel sind Mittel der Tageswerte. Die Bewölkung wird in Achteln angegeben\n
+
+        Die Verteilung der Tagesmitteltemperaturen zeigt, an wie vielen Tagen des Monats welcher Wert
+        aufgetreten ist und in welchem Bereich sich die Tagesmittel bewegen. Die Häufigkeit wird in 1°C-Intervallen
+        gezählt. Das arithmetische Mittel der Tagesmitteltemperaturen liegt nicht immer im häufigsten Teilintervall.
+        Wenn man das Diagramm antippt, werden die Häufigkeiten in einer Tabelle angezeigt.\n
+        Heitere Tage sind solche mit einer vom Monat abhängigen minimalen Zahl an Sonnenstunden (Dez: 6, Juni 13). An
+        trüben Tagen scheint die Sonne höchstens eine Stunde.
+
+        Bei den Wetterlagen wird die Strömungsrichtung (aus NW, NO, SO, SW oder ohne) und der Charakter (feucht-trocken)
+        unterschieden. Angegeben sind die Prozentsätze, an wie vielen Tagen im Monat die jeweilige
+        Wetterlage aufgetreten ist.\n
+        \n
+        Das Jahr kann mit den Tasten [+] und [-] geblättert werden, durch Tippen auf das Jahr kann man einen Termindialog öffnen.
+
+
+    </string>
+
+    <string name="extreme_help">
+        Die höchsten oder tiefsten Temperaturen bzw. die Extreme von Niederschlägen, Sonnenscheinstunden und Schneehöhen
+        beziehen sich auf den auf der Mittelwerte-Seite eingestellten Tag bzw. Monat.\n
+        In den Einstellungen kann man auswählen, welche Vergleichsperiode herangezogen werden soll. Nicht alle Stationen
+        bieten für den Zeitraum lückenlose Daten. Das gilt besonders für die Sonnenscheinstunden.
+
+    </string>
+
+    <string name="jahr_temp_help">
+        Dieses Diagramm zeigt den mittleren Temperaturverlauf während des Jahres. Eingezeichnet sind die mittleren Tagesmittel,
+        die mittleren Tageshöchst- und Tagesminimalwerte. Der türkis schattierte Bereich zeigt, wo die Tagesmittel in ca. 2/3 der
+        Jahre liegen. Das Intervall von einer Standardabweichung um das mittlere Tagesmittel ist dafür eine gute
+        Näherung.\n
+
+        Die obere und die untere Kurve zeigen die absoluten Maximal- bzw. Minimaltemperaturen, die an der ausgewählten Station
+        jemals gemessen wurden.\n\n
+        Man kann das Diagramm antippen, dann wird es auf den gesamten Bildschirm vergrößert.
+    </string>
+
+        <string name="jahr_phen_help">
+        Dieses Diagramm zeigt die mittleren Tageswerte für den Niederschlag in mm, die Windstärke, die Sonnenscheinstunden,
+            die Bewölkung in Achteln und für die relative Luftfeuchtigkeit in Prozent. Wegen der großen Schwankungen
+            von Tag zu Tag werden diese Werte am Besten über mehrere Tage geglättet. Dies kann man in den Einstellungen
+            festlegen.\n\n
+        Man kann das Diagramm antippen, dann wird es auf den gesamten Bildschirm vergrößert.
+    </string>
+
+  <string name="tpluvi_help">
+    Dieses Diagramm vergleicht die eingestellte Beobachtungsperiode mit einem ebenfalls in Einstellungen wählbaren
+      einzelnen Jahr. Der Nullpunkt entspricht dem Mittel (des Monats, der Jahreszeit bzw. des Jahres).\n
+      Beim Winter zählt der Dezember des Vorjahres.\n
+      Vertikal ist der Niederschlag und seine Abweichung in Prozent der mittleren Monatssumme aufgetragen.
+      Horizontal wird die Abweichung der Tagesmitteltemperatur in °C (genauer die Differenz in K) angezeigt.\n\n
+        Man kann das Diagramm antippen, dann wird es auf den gesamten Bildschirm vergrößert.
+</string>
+
+  <string name="trend_help">
+    Dieses Diagramm zeigt die Entwicklung der Tagesmitteltemperatur während einer Jahreszeit bzw. des Gesamtjahres
+      über den Beobachtungszeitraum an. Je nach Station reicht letzterer unterschiedlich weit in die
+      Vergangenheit zurück. Auch hier solle eine Glättung über mehrere Jahre eingestellt werden.\n\n
+        Man kann das Diagramm antippen, dann wird es auf den gesamten Bildschirm vergrößert.
+</string>
+
+  <string name="sommer_help">
+  Hier werden Kennzahlen für die Witterung im Sommer pro Jahr in Listenform angezeigt: Zahl der Sommertage (Maximum
+      über 25°C), der heißen Tage (Maximum über 30°C), der Tropennächte (Minimum über 20°C). Außerdem werden die
+      Sonnenstunden von Mai bis August und die Sonnentage mit über 12h Sonnenschein angegeben.
+</string>
+
+      <string name="winter_help">
+          Beim Winter zählt der Dezember und beim ersten Frost der Herbst zum Winter des nächsten Jahres.\
+          Die Kältesumme ist die Summe der negativen Tagesmitteltemperaturen. Ein Frosttag ist ein Tag mit
+          Luftfrost (Minimum unter 0°C), ein Eistag ist ein Tag mit Dauerfrost (Maximum unter 0°C). An einem
+          Schneetag liegt eine Schneedecke von mindestens 1cm. Beim ersten/letzten Frost zählt nur Luftfrost
+          in 2m Höhe.
+</string>
+      <string name="gradtage_help">
+          Bei den Gradtagen zählt die Summe der Tagesmitteltemperaturen minus der Basistemperatur (eingestellt
+          sind zunächst 20°C) falls die Tagesmitteltemperatur unter der Heizschwelle (eingestellt sind
+          zunächst 15°C) liegt. In diesem Fall wird der Tag als Heiztag gezählt. Die Basistemperatur und
+          die Heizschwelle können in den Einstellungen verändert werden.\n
+          Es gibt eine Seite zur Auswertung pro Kalenderjahr, eine Seite zur Auswertung pro Winter und eine für die mittleren
+          Monatswerte im Beobachtungszeitraum (je nach eingestellter Periode und Verfügbarkeit der Daten zur
+          ausgewählten Station).\n
+          \n
+          Wichtig: alle Angaben sind ohne Gewähr. Bitte für rechtlich verbindliche Zwecke die Daten
+          direkt beim DWD oder anderen Institutionen beschaffen.
+</string>
+
+    <string name="info">
+        Klimastatistik\n\n
+        Diese Anwendung beruht auf Daten des deutschen Wetterdiensts (dwd.de). \n\n
+
+        Die Anwendung benutzt Bibliotheken von Google und aus dem Apache-Projekt.
+    \n\n
+        Sie ist Open Source und freie Software, darf weiterverteilt und verändert werden
+        unter der GNU General Public License wie sie von der Free Software Foundation herausgegeben wird,
+        entweder nach Version 2 oder wahlweise nach jeder späteren Version: http://www.gnu.org/licenses/.
+
+         You should have received a copy of the GNU General Public License
+            along with this program.  If not, see http://www.gnu.org/licenses/.\n\n
+
+	    Die Programmquellen sind erhältlich unter http://gdoeppert.de/android/klimastatistik_src.zip.\n\n
+
+        Der Autor übernimmt keine Gewährleistung für die Richtigkeit der angezeigten Daten oder
+        für irgendeine Nutzbarkeit der Anwendung. Verlässliche Daten können vom DWD oder von
+        anderen Institutionen oder Anbietern bezogen werden..
+
+    </string>
+
+
+    <string name="stationen_help">
+        Man kann die ausgewählte Station löschen oder ihre Werte aktualisieren.\n
+        Außerdem kann man alle importierten Stationen aktualisieren - soweit neuere Daten vorhanden sind.\n
+        Aus der Gesamtliste der Stationen des DWD kann man eine Station auswählen und deren Daten importieren. Dieser
+        Vorgang dauert etwas länger (bis zu einigen Minuten) und es werden 1-2 MB Daten heruntergeladen. Zur Erleichterung
+        der Auswahl kann man diese bei eingeschalteter Standortermittlung auf die nahegelegenen Stationen
+        einschränken.
+        </string>
+
+    <string name="pref_help">
+        Eingestellt werden kann:\n
+        Auswertungsperiode: 1961-1990, 1981-2010, alle verfügbaren Daten oder Einschränkung auf das weiter unten
+        eingegebene Bezugsjahr. Letzteres wird sonst nur beim Jahresvergleich im Thermopluviogramm benutzt.
+        Für die anderen Diagramme können Glättungsfenster eingestellt werden. Sinnvoll sind etwa 0-5 Tage bzw. Jahre.\n
+        Für die Auswertung der Heizdaten können die Zieltemperatur und die Heizschwelle eingestellt werden.
+        </string>
+
+
+</resources>
+

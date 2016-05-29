@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WetterlagenView">
+        <attr name="color_dir" format="color" />
+        <attr name="color_hum" format="color" />
+        <attr name="color_dry" format="color" />
+        <attr name="textsize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="TableView">
+        <attr name="cellpadding" format="dimension" />
+        <attr name="textcolor" format="color" />
+        <attr name="textsize" />
+    </declare-styleable>
+
+    <declare-styleable name="DistributionView">
+        <attr name="strokewidth" format="dimension" />
+        <attr name="color" />
+        <attr name="axiscolor" format="color" />
+        <attr name="textsize" />
+    </declare-styleable>
+
+</resources>
