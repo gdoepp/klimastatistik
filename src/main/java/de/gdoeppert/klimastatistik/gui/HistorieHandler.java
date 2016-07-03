@@ -1,5 +1,6 @@
 package de.gdoeppert.klimastatistik.gui;
 
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -68,6 +69,7 @@ public class HistorieHandler extends WerteHandler implements View.OnClickListene
         Vector<Wertermittler.Tval> tvv = new Vector<Wertermittler.Tval>();
         if (tv != null) {
             tvv.add(tv);
+            partial = tm.isPartial();
         }
 
         Tagesmittel tmm = new Tagesmittel();
@@ -144,9 +146,11 @@ public class HistorieHandler extends WerteHandler implements View.OnClickListene
 
             txt = (TextView) overview.findViewById(R.id.rs_mitt);
             txt.setText(tv.getRsS());
+            txt.setTypeface(null, partial ? Typeface.ITALIC : Typeface.NORMAL);
 
             txt = (TextView) overview.findViewById(R.id.sd_mitt);
             txt.setText(tv.getSdS());
+            txt.setTypeface(null, partial ? Typeface.ITALIC : Typeface.NORMAL);
 
             txt = (TextView) overview.findViewById(R.id.nm_mitt);
             txt.setText(tv.getNmS());
@@ -250,6 +254,7 @@ public class HistorieHandler extends WerteHandler implements View.OnClickListene
     private View overview = null;
     private Vector<Wertermittler.Tval> tvv = null;
 
+    boolean partial = true;
     int monat = 0;
     int jahr = 2999;
 }

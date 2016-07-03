@@ -69,8 +69,8 @@
         Die Mittelwerte auf dieser Seite beziehen sich auf das eingestellte Jahr. Nicht alle Stationen
         bieten lückenlose Daten. Dies gilt besonders für die Sonnenscheinstunden.\n
 
-        Bei den Sonnenstunden und bei den Niederschlägen wird die Monatssumme angezeigt, wenn die Daten
-            für den Monat unvollständig sind, wird sie auf den ganzen Monat hochgerechnet.
+        Bei den Sonnenstunden und bei den Niederschlägen wird die Monatssumme angezeigt. Wenn die Daten
+            für den Monat unvollständig sind, wird sie auf den ganzen Monat hochgerechnet und kursiv angezeigt.
          Die anderen Mittel sind Mittel der Tageswerte. Die Bewölkung wird in Achteln angegeben\n
 
         Die Verteilung der Tagesmitteltemperaturen zeigt, an wie vielen Tagen des Monats welcher Wert

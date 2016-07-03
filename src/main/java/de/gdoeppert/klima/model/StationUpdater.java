@@ -92,23 +92,38 @@ public class StationUpdater {
         }
     }
 
-    protected void insertWetterlage(InputStream inp) {
+    protected void insertWetterlage(InputStream inp, Calendar trimDat) {
         // 03.2014 24 4 24 6 15 1 1 1 1 1 2 2 1 5 10 10 5 9 10 4 29 29 15 15 11 33 33 23 3 21 5
 
-        String sql = "select max(jahr*10000+monat*100+tag) from " + schema + "wetterlage";
+        String sql = "select max(jahr*10000+monat*100+tag) from " + schema
+                + "wetterlage where nummer>0";
         int maxDat = 0;
         ResultSet rs;
+        Statement st = null;
         try {
-            Statement st = dbBean.getDb().createStatement();
+            st = dbBean.getDb().createStatement();
             rs = st.executeQuery(sql);
             if (rs.next()) {
                 maxDat = rs.getInt(1);
+                if (trimDat != null) {
+                    maxDat = Math.min(maxDat, trimDat.get(Calendar.YEAR) * 10000 + (trimDat.get(Calendar.MONTH) + 1) * 100 + trimDat.get(Calendar.DAY_OF_MONTH));
+                }
                 Log.d("insWetterlage", "maxDat=" + maxDat);
             }
+            st.close();
+            st = dbBean.getDb().createStatement();
+            st.execute("delete from " + schema + "wetterlage where jahr*10000+monat*100+tag > " + maxDat);
+
         } catch (SQLException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
+        } finally {
+            if (st != null) try {
+                st.close();
+            } catch (SQLException e) {
+            }
         }
+
 
         sql = "insert into " + schema + "wetterlage(jahr, monat, tag, nummer) values(?,?,?,?)";
         PreparedStatement pst;
@@ -130,11 +145,11 @@ public class StationUpdater {
                     String[] mmjjjj = fields[0].split("[.]");
                     int monat = Integer.valueOf(mmjjjj[0]);
                     int jahr = Integer.valueOf(mmjjjj[1]);
-                    if (jahr*10000+monat*100+31 < maxDat ) {
+                    if (jahr * 10000 + monat * 100 + 31 < maxDat) {
                         continue;
                     }
                     for (int t = 1; t < fields.length; t++) {
-                        if (jahr * 10000 + monat * 100 + t > maxDat) {
+                        if (jahr * 10000 + monat * 100 + t > maxDat && Integer.valueOf(fields[t]) > 0) {
                             pst.setInt(1, jahr);
                             pst.setInt(2, monat);
                             pst.setInt(3, t);
@@ -234,7 +249,7 @@ public class StationUpdater {
         }
     }
 
-    protected void update(InputStream inp, int stat) {
+    protected void update(InputStream inp, int stat, Calendar trimDat) {
 
         int maxDat = 0;
 
@@ -247,6 +262,9 @@ public class StationUpdater {
                     "where stat=" + stat + " and qual>1");
             if (rs.next()) {
                 maxDat = rs.getInt(1);
+                if (trimDat != null) {
+                    maxDat = Math.min(maxDat, trimDat.get(Calendar.YEAR) * 10000 + (trimDat.get(Calendar.MONTH) + 1) * 100 + trimDat.get(Calendar.DAY_OF_MONTH));
+                }
                 Log.d("update tageswerte", "maxDat=" + maxDat);
             }
             rs.close();
@@ -448,12 +466,12 @@ public class StationUpdater {
 
     }
 
-    protected void updateZip(InputStream fin, int stat) throws IOException {
+    protected void updateZip(InputStream fin, int stat, Calendar trimDat) throws IOException {
         ZipInputStream zin = new ZipInputStream(fin);
         ZipEntry zen = null;
         while ((zen = zin.getNextEntry()) != null) {
             if (zen.getName().startsWith("produkt")) {
-                update(zin, stat);
+                update(zin, stat, trimDat);
                 break;
             }
         }

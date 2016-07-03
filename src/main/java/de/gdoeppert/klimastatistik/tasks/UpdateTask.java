@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.util.Calendar;
+
 import de.gdoeppert.klimastatistik.gui.KlimaStatActivity;
 import de.gdoeppert.klimastatistik.model.StationUpdaterFromINet;
 
@@ -19,6 +21,8 @@ public class UpdateTask extends AsyncTask<KlimaStatActivity, String, KlimaStatAc
     private String result;
     private Activity activity;
     private ProgressDialog progress = null;
+    private Calendar trimDat = null;
+
 
     public enum Operation {upd_alle, upd_this, del_this, import_one}
 
@@ -26,9 +30,10 @@ public class UpdateTask extends AsyncTask<KlimaStatActivity, String, KlimaStatAc
     Operation operation;
 
 
-    public UpdateTask(Activity act, Operation op) {
+    public UpdateTask(Activity act, Operation op, Calendar td) {
         this.operation = op;
         activity = act;
+        trimDat = td;
     }
 
     @Override
@@ -42,17 +47,17 @@ public class UpdateTask extends AsyncTask<KlimaStatActivity, String, KlimaStatAc
         switch (operation) {
 
             case upd_alle:
-                result = upd.insertTageswerte(false, -1);
-                upd.insertWetterlagen();
+                result = upd.insertTageswerte(false, -1, trimDat);
+                upd.insertWetterlagen(trimDat);
                 break;
             case upd_this:
-                result = upd.insertTageswerte(false, activity.getStation().getSelStat().getStat());
-                upd.insertWetterlagen();
+                result = upd.insertTageswerte(false, activity.getStation().getSelStat().getStat(), trimDat);
+                upd.insertWetterlagen(trimDat);
                 break;
             case import_one:
-                result = upd.insertTageswerte(true, statid);
+                result = upd.insertTageswerte(true, statid, trimDat);
                 if (result != null && !result.isEmpty()) {
-                    result = upd.insertTageswerte(false, statid);
+                    result = upd.insertTageswerte(false, statid, trimDat);
                 }
                 break;
             case del_this:
@@ -91,6 +96,7 @@ public class UpdateTask extends AsyncTask<KlimaStatActivity, String, KlimaStatAc
 
         Log.d("UpdateTask", "post execute update");
         stf.setDirty();
+        stf.setStationenDirty();
         stf.update();
 
         super.onPostExecute(stf);

@@ -57,11 +57,11 @@ public class Thermopluvi {
             if (monat.nds < 0) {
                 x1[midx] = x10;
                 Log.d("thermopluvi", "x1: " + x10);
-                x10 += monlen[midx] + 20;
+                x10 += monlen[monat.monat - 1] + 20;
             } else {
                 x2[midx] = x20;
                 Log.d("thermopluvi", "x2: " + x20);
-                x20 += monlen[midx] + 20;
+                x20 += monlen[monat.monat - 1] + 20;
             }
         }
 
@@ -74,25 +74,25 @@ public class Thermopluvi {
             MonatValTN monat = monate.get(midx);
 
             double x = x0 + (monat.tm * dx);
-
+            Log.d("thermopluvi", "mon " + mon[monat.monat] + " len " + monlen[monat.monat - 1]);
             if (monat.nds < 0) {
-                if (x > x1[midx] && x < x10 - monlen[midx] - 20) {
+                if (x > x1[midx] && x < x10 - monlen[monat.monat - 1] - 20) {
                     x1[midx] = x;
                     Log.d("thermopluvi", "fit_1 x: " + x);
-                } else if (x >= x10 - 20 - monlen[midx]) {
-                    Log.d("thermopluvi", "right_1 al x: " + (x10 - 20 - monlen[midx]));
-                    x1[midx] = x10 - 20 - monlen[midx];
+                } else if (x >= x10 - 20 - monlen[monat.monat - 1]) {
+                    Log.d("thermopluvi", "right_1 al x: " + (x10 - 20 - monlen[monat.monat - 1]));
+                    x1[midx] = x10 - 20 - monlen[monat.monat - 1];
                 } else {
                     Log.d("thermopluvi", "left_1 al x: " + (x1[midx]));
                 }
                 x10 = x1[midx];
             } else {
-                if (x > x2[midx] && x < x20 - monlen[midx] - 20) {
+                if (x > x2[midx] && x < x20 - monlen[monat.monat - 1] - 20) {
                     Log.d("thermopluvi", "fit_2 x: " + x);
                     x2[midx] = x;
-                } else if (x >= x20 - 20 - monlen[midx]) {
-                    x2[midx] = x20 - 20 - monlen[midx];
-                    Log.d("thermopluvi", "right_2 al x: " + (x20 - 20 - monlen[midx]));
+                } else if (x >= x20 - 20 - monlen[monat.monat - 1]) {
+                    x2[midx] = x20 - 20 - monlen[monat.monat - 1];
+                    Log.d("thermopluvi", "right_2 al x: " + (x20 - 20 - monlen[monat.monat - 1]));
                 } else {
                     Log.d("thermopluvi", "left_2 al x: " + (x2[midx]));
                 }

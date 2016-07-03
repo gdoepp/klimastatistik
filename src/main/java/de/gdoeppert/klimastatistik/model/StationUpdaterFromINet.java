@@ -15,6 +15,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 import java.util.Vector;
 
 import de.gdoeppert.klima.model.DbBase;
@@ -68,7 +69,7 @@ public class StationUpdaterFromINet extends StationUpdater implements Closeable 
 
     }
 
-    public void insertWetterlagen() {
+    public void insertWetterlagen(Calendar trimDat) {
         String pathname = "https://www.dwd.de/DE/leistungen/wetterlagenklassifikation/online_wlkdaten.txt?view=nasPublication";
 
         try {
@@ -81,7 +82,7 @@ public class StationUpdaterFromINet extends StationUpdater implements Closeable 
             int rc = httpClient.getResponseCode();
             Log.d("http", "rc=" + rc);
             if (rc < 300) {
-                insertWetterlage(inp);
+                insertWetterlage(inp, trimDat);
             }
             httpClient.disconnect();
 
@@ -92,7 +93,7 @@ public class StationUpdaterFromINet extends StationUpdater implements Closeable 
         }
     }
 
-    public String insertTageswerte(boolean historical, int statNr0) {
+    public String insertTageswerte(boolean historical, int statNr0, Calendar trimDat) {
         int rc;
         String filename = null;
 
@@ -176,7 +177,7 @@ public class StationUpdaterFromINet extends StationUpdater implements Closeable 
                 rc = ftpClient.getReplyCode();
                 Log.i("UpdaterNet", "ftp retrieve rc = " + rc);
                 if (fin != null) {
-                    updateZip(fin, statNr);
+                    updateZip(fin, statNr, trimDat);
                     stationen_upd.add(statNr);
                     fin.close();
                     ftpClient.completePendingCommand();

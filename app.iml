@@ -61,13 +61,6 @@
       <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/main/java" isTestSource="false" />
       <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/main/jni" isTestSource="false" />
       <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/main/rs" isTestSource="false" />
-      <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/test/res" type="java-test-resource" />
-      <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/test/resources" type="java-test-resource" />
-      <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/test/assets" type="java-test-resource" />
-      <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/test/aidl" isTestSource="true" />
-      <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/test/java" isTestSource="true" />
-      <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/test/jni" isTestSource="true" />
-      <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/test/rs" isTestSource="true" />
       <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/androidTest/res" type="java-test-resource" />
       <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/androidTest/resources" type="java-test-resource" />
       <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/androidTest/assets" type="java-test-resource" />
@@ -75,6 +68,13 @@
       <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/androidTest/jni" isTestSource="true" />
       <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/androidTest/rs" isTestSource="true" />
+      <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/test/res" type="java-test-resource" />
+      <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/test/assets" type="java-test-resource" />
+      <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/test/aidl" isTestSource="true" />
+      <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/test/java" isTestSource="true" />
+      <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/test/jni" isTestSource="true" />
+      <sourceFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/src/test/rs" isTestSource="true" />
       <excludeFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/build/intermediates/assets" />
       <excludeFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/build/intermediates/blame" />
       <excludeFolder url="file:///home/all/gd/StudioProjects/Klimastatistik/app/build/intermediates/builds" />

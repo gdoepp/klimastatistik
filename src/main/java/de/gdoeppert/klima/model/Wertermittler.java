@@ -40,7 +40,7 @@ public class Wertermittler {
 
         ResultSet rs = st
                 .executeQuery("select monat, avg(tm) as tm, avg(tn), avg(tx), min(tn), max(tx), avg(rs)," +
-                                " avg(nm), avg(sd), avg(schnee), avg(schnee>0), avg(rs>0), avg(sd>= ( 13-abs(monat-6) - (abs(monat-6)>3))), avg(sd<=1)  "
+                        " avg(nm), avg(sd), avg(schnee), avg(schnee>0), avg(rs>0), avg(sd>= ( 13-abs(monat-6) - (abs(monat-6)>3))), avg(sd<=1), count(*)  "
                                 + " from " + dbBean.getSchema() + "tageswerte "
                                 + stat
                                 + " and jahr between "
@@ -96,6 +96,7 @@ public class Wertermittler {
                 if (rs.getString(14) != null) {
                     tv.truebAnt = rs.getDouble(14);
                 }
+                tv.tage = rs.getInt(15);
             } catch (Exception e) {
             }
         } /* while (rs.next()) */
@@ -220,6 +221,7 @@ public class Wertermittler {
         public double rsAnt;
         public double heiterAnt;
         public double truebAnt;
+        public int tage;
 
         public Wetterlage wl;
 

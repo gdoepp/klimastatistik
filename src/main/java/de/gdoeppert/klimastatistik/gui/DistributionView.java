@@ -152,10 +152,11 @@ public class DistributionView extends KlimaViewBase implements View.OnClickListe
 
         painter.setTextAlign(Paint.Align.LEFT);
         canvas.drawText(String.format("%2.0f°C", xmin), x0, h - textsize / 2, painter);
-
+        canvas.drawLine(x0, y0, x0, y0 - 10, painter);
 
         painter.setTextAlign(Paint.Align.RIGHT);
         canvas.drawText(String.format("%2.0f°C", xmax), x0 + n * dn, h - textsize / 2, painter);
+        canvas.drawLine(x0 + n * dn, y0, x0 + n * dn, y0 - 10, painter);
 
         canvas.drawLine(x0, y0, x0 + n * dn, y0, painter);
 

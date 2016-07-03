@@ -6,6 +6,7 @@ import java.sql.Statement;
 public class Monatswerte extends Wertermittler {
 
     int jahr;
+    boolean partial = false;
 
     public int getJahr() {
         return jahr;
@@ -45,6 +46,9 @@ public class Monatswerte extends Wertermittler {
             String condition = "monat=" + monat;
 
             tv = eval(st, stat, jahr_s, jahr_s, condition);
+            if (tv.tage < tageMonat[monat - 1] - 1.5) { // 1 Tag darf fehlen
+                partial = true;
+            }
 
             tv.tmDist = getTvalDistrib(st, stat, jahr_s, jahr_s, condition);
             addWetterlage(st, monat, jahr_s, jahr_s, condition);
@@ -71,4 +75,7 @@ public class Monatswerte extends Wertermittler {
         return tv;
     }
 
+    public boolean isPartial() {
+        return partial;
+    }
 }

@@ -9,11 +9,11 @@ import java.sql.Statement;
 import java.util.Map;
 import java.util.TreeMap;
 
+/** Station des DWD
+ *
+ */
 public class Station implements Serializable {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
     DbBase dbBean;
 
@@ -29,6 +29,11 @@ public class Station implements Serializable {
     }
 
     public boolean init() {
+
+        int statId = -1;
+        if (selStat != null) {
+            statId = selStat.stat;
+        }
 
         stationen_alle = new TreeMap<String, Stat>();
         stationen = new TreeMap<String, Stat>();
@@ -67,20 +72,12 @@ public class Station implements Serializable {
             e.printStackTrace();
             return false;
         }
-/*
-        Stat gesamt = new Stat();
-        gesamt.stat = 0;
-        gesamt.name = "Gesamt";
-        gesamt.jahr1 = jahr1;
-        gesamt.jahr2 = jahr2;
-       // stationen.put("", gesamt);
-        //stationen_i.put(gesamt.stat, gesamt);
 
-        //selStat = gesamt;
-        */
         if (!stationen_i.isEmpty()) {
-            int first = stationen_i.keySet().iterator().next();
-            selStat = stationen_i.get(first);
+            if (statId < 0 || !stationen_i.keySet().contains(statId)) {
+                statId = stationen_i.keySet().iterator().next(); // take first
+            }
+            selStat = stationen_i.get(statId);
         }
 
         return true;
@@ -99,11 +96,21 @@ public class Station implements Serializable {
         } else return new Stat[0];
     }
 
+    /** alle verfügbaren Stationen
+     *
+     * @return Array der Stationen
+     */
     public Stat[] getStationenAlle() {
         return getStationenIntern("select stat, name, aktiv_von, aktiv_bis, hoehe "
                 + "from " + dbBean.getSchema() + "station order by name");
     }
 
+    /** nahegelegene Stationen ermitteln (0,25° in Breite und Länge)
+     *
+     * @param lat geographische Breite
+     * @param lng geographische Länge
+     * @return Array der passenden Stationen
+     */
     public Stat[] getStationenAlle(double lat, double lng) {
 
         String query = "select stat, name, aktiv_von, aktiv_bis, hoehe "

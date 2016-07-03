@@ -167,7 +167,7 @@ public class Gradtage implements Serializable {
                         if (wertTyp == 1) {
                             mon.group = rs.getString(1);
                         } else {
-                            mon.group = (rs.getInt(1) -1) + "-" + rs.getString(1);
+                            mon.group = (rs.getInt(1) - 1) + "-" + rs.getString(1);
                         }
                         mon.tm = rs.getDouble(2) / stationen;
                         mon.tage = rs.getDouble(3) / stationen;

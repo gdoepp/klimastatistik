@@ -20,6 +20,8 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Vector;
 
 import de.gdoeppert.klima.model.Stat;
@@ -61,6 +63,14 @@ public class StationenDialog extends DialogFragment implements AdapterView.OnIte
         } else {
             txt.setText("#leer#");
         }
+
+        txt = (TextView) layout.findViewById(R.id.heute_trim);
+        SimpleDateFormat format1 = new SimpleDateFormat("dd.MM.yyyy");
+        txt.setText(format1.format(activity.getHeute().getTime()));
+
+        final CheckBox trim = (CheckBox) layout.findViewById(R.id.chkTrim);
+        trim.setChecked(false);
+
         final Spinner list = (Spinner) layout.findViewById(R.id.station_alle_list);
 
         setStationAdapter(list, false);
@@ -88,8 +98,8 @@ public class StationenDialog extends DialogFragment implements AdapterView.OnIte
 
             @Override
             public void onClick(View arg0) {
-
-                UpdateTask upd = new UpdateTask(activity, UpdateTask.Operation.del_this);
+                Calendar trimDat = trim.isChecked() ? activity.getHeute() : null;
+                UpdateTask upd = new UpdateTask(activity, UpdateTask.Operation.del_this, trimDat);
                 upd.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, activity);
                 activity.setStationenDirty();
 
@@ -107,8 +117,8 @@ public class StationenDialog extends DialogFragment implements AdapterView.OnIte
             public void onClick(View arg0) {
 
                 if (isNetworkAvailable(activity)) {
-
-                    UpdateTask upd = new UpdateTask(activity, UpdateTask.Operation.upd_this);
+                    Calendar trimDat = trim.isChecked() ? activity.getHeute() : null;
+                    UpdateTask upd = new UpdateTask(activity, UpdateTask.Operation.upd_this, trimDat);
                     upd.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, activity);
 
                     StationenDialog.this.dismiss();
@@ -127,7 +137,8 @@ public class StationenDialog extends DialogFragment implements AdapterView.OnIte
             public void onClick(View arg0) {
 
                 if (isNetworkAvailable(activity)) {
-                    UpdateTask upd = new UpdateTask(activity, UpdateTask.Operation.upd_alle);
+                    Calendar trimDat = trim.isChecked() ? activity.getHeute() : null;
+                    UpdateTask upd = new UpdateTask(activity, UpdateTask.Operation.upd_alle, trimDat);
                     upd.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, activity);
 
                     StationenDialog.this.dismiss();
@@ -148,7 +159,8 @@ public class StationenDialog extends DialogFragment implements AdapterView.OnIte
                 if (isNetworkAvailable(activity)) {
 
                     if (statSelected != null) {
-                        UpdateTask upd = new UpdateTask(activity, UpdateTask.Operation.import_one);
+                        Calendar trimDat = trim.isChecked() ? activity.getHeute() : null;
+                        UpdateTask upd = new UpdateTask(activity, UpdateTask.Operation.import_one, trimDat);
                         upd.setStation(statSelected.getStat());
                         upd.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, activity);
                     }
