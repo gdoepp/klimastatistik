@@ -110,6 +110,7 @@
                 klima:axiscolor="#f0f0f0"
                 klima:strokewidth="1dp"
                 klima:color="#00ff00"
+                klima:rangecolor="#00ffff"
                 klima:textsize="18sp"
                 android:id="@+id/distribution" />
 
@@ -153,6 +154,42 @@
                         android:textAlignment="textEnd"
                         android:gravity="end"
                         android:minWidth="90sp"
+                        android:textSize="18sp"></TextView>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="abs.Max./°C"
+                        android:textColor="#c47908"
+                        android:textSize="18sp"></TextView>
+
+                    <TextView
+                        android:id="@+id/max_abs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginRight="10dp"
+                        android:textAlignment="textEnd"
+                        android:textColor="#c47908"
+                        android:textSize="18sp"></TextView>
+
+
+                    <TextView
+                        android:id="@+id/max_abs_mon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:textAlignment="textEnd"
+                        android:textColor="#c47908"
                         android:textSize="18sp"></TextView>
 
                 </TableRow>
@@ -268,7 +305,41 @@
 
                 </TableRow>
 
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp">
 
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="abs.Min./°C"
+                        android:textColor="#aa00ff"
+                        android:textSize="18sp"></TextView>
+
+
+                    <TextView
+                        android:id="@+id/min_abs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginRight="10dp"
+                        android:textAlignment="textEnd"
+                        android:textColor="#aa00ff"
+                        android:textSize="18sp"></TextView>
+
+                    <TextView
+                        android:id="@+id/min_abs_mon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:textAlignment="textEnd"
+                        android:textColor="#aa00ff"
+                        android:textSize="18sp"></TextView>
+
+                </TableRow>
                 <!--                    Phänomene                     -->
 
                 <TableRow

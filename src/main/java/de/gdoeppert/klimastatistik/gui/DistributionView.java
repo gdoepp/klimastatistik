@@ -5,8 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
+
+import java.util.Vector;
 
 import de.gdoeppert.klima.model.Tagesmittel;
 
@@ -15,7 +18,9 @@ import de.gdoeppert.klima.model.Tagesmittel;
  */
 public class DistributionView extends KlimaViewBase implements View.OnClickListener {
 
+    private Vector<Double> tmMittelV;
     private double tmMittel;
+    private double tmMittelDev;
 
     public DistributionView(Context context, AttributeSet attrs) {
 
@@ -29,6 +34,8 @@ public class DistributionView extends KlimaViewBase implements View.OnClickListe
                 background = attrs.getAttributeIntValue(j, Color.rgb(0x20, 0x20, 0x20));
             } else if (attrs.getAttributeName(j).equals("color")) {
                 color = attrs.getAttributeIntValue(j, Color.rgb(255, 0, 255));
+            } else if (attrs.getAttributeName(j).equals("rangecolor")) {
+                rangecolor = attrs.getAttributeIntValue(j, Color.rgb(0, 255, 255));
             } else if (attrs.getAttributeName(j).equals("axiscolor")) {
                 axiscolor = attrs.getAttributeIntValue(j, Color.rgb(255, 255, 255));
             } else if (attrs.getAttributeName(j).equals("textsize")) {
@@ -62,104 +69,96 @@ public class DistributionView extends KlimaViewBase implements View.OnClickListe
         int n = tempdist.length;
         float nmax = n - 1;
 
-        float xmin = (float) tempdist[0].wert;
-        float xmax = (float) tempdist[n - 1].wert;
+        float ymin = (float) tempdist[0].wert;
+        float ymax = (float) tempdist[n - 1].wert;
 
-        float ymax = 0;
-        int anz = 0;
+        float xmax = 0;
+        float xmin = 0;
+
         for (int j = 0; j < n; j++) {
-            if (ymax < tempdist[j].anz) {
-                ymax = tempdist[j].anz;
+            if (xmax < tempdist[j].anz) {
+                xmax = tempdist[j].anz;
             }
-            anz += tempdist[j].anz;
         }
-
-        int anz6 = 0;
-        float f1 = (float) tempdist[0].wert;
-        for (int j = 0; j < n; j++) {
-            if (j > 0 && anz6 + tempdist[j].anz > anz / 6f) {
-                f1 = (float) (tempdist[j - 1].wert + (anz / 6f - tempdist[j - 1].anz) / (tempdist[j].anz - tempdist[j - 1].anz) * (tempdist[j].wert - tempdist[j - 1].wert));
-                break;
-            }
-            anz6 += tempdist[j].anz;
-        }
-        anz6 = 0;
-        float f2 = (float) tempdist[n - 1].wert;
-        for (int j = n - 1; j >= 0; j--) {
-            if (j < n - 1 && anz6 + tempdist[j].anz > anz / 6f) {
-                f2 = (float) (tempdist[j + 1].wert + (anz / 6f - tempdist[j + 1].anz) / (tempdist[j].anz - tempdist[j + 1].anz) * (tempdist[j].wert - tempdist[j + 1].wert));
-                break;
-            }
-            anz6 += tempdist[j].anz;
-        }
-
-        float x0 = 4 * strokewidth;
-        float dn = (w - 8 * strokewidth) / n;
-        float dx = (w - 8 * strokewidth) / (xmax - xmin);
-        float y0 = h - 2 * textsize;
-        float dy = (h - 2 * textsize) / ymax;
 
         painter.reset();
         painter.setColor(color);
         painter.setStrokeWidth(strokewidth);
         painter.setTextSize(textsize);
 
-        if (false) {
-            float x1 = x0;
-            float y1 = y0 - tempdist[0].anz * dy;
+        Rect bounds = new Rect();
+        painter.getTextBounds("28.8°CM", 0, 7, bounds);
+        float x0 = bounds.width();
+        float x1 = w;
 
-            path.reset();
-            path.moveTo(x1, y1);
-            for (int j = 1; j < n; j++) {
-                float x2 = (float) (x0 + (tempdist[j].wert - xmin) * dx);
-                float y2 = y0 - tempdist[j].anz * dy;
-                path.lineTo(x2, y2);
-
-            }
-            painter.setStrokeJoin(Paint.Join.ROUND);
-            painter.setStrokeCap(Paint.Cap.ROUND);
-            painter.setStyle(Paint.Style.STROKE);
-            canvas.drawPath(path, painter);
-        }
-        {
-            float x1 = x0;
-            float y1 = y0;
-
-            path.reset();
-            path.moveTo(x1, y1);
-            for (int j = 0; j < n; j++) {
-                float y2 = y0 - tempdist[j].anz * dy;
-                path.addRect(x0 + j * dn + 1, y2, x0 + (j + 1) * dn - 1, y0, Path.Direction.CCW);
-
-            }
-            painter.setAlpha(60);
-            painter.setStyle(Paint.Style.FILL);
-            canvas.drawPath(path, painter);
+        if (tmMittelV != null) {
+            x1 -= (w - x0) / 5f;
         }
 
+        float dn = (h - 8 * strokewidth) / n;
+        float dx = (x1 - x0) / (xmax - xmin);
+        float y0 = (h - 4 * strokewidth);
+        float dy = (h - 8 * strokewidth) / (ymax - ymin);
+
+
+        path.reset();
+        for (int j = 0; j < n; j++) {
+            float x2 = x0 + tempdist[j].anz * dx;
+            path.addRect(x0, y0 - (j + 1) * dn + 1, x2, y0 - j * dn - 1, Path.Direction.CCW);
+            // Log.d("distrib","rect "+x0 + "," + (y0-j*dn+1) + "," + x2 +","+ (y0 - (j + 1) * dn - 1));
+
+        }
+        painter.setAlpha(60);
         painter.setStyle(Paint.Style.FILL);
-        float xtm = (float) (x0 + (tmMittel - xmin) * dx);
+        canvas.drawPath(path, painter);
+
+        painter.setTextAlign(Paint.Align.LEFT);
+
+        if (tmMittelV != null && tmMittelV.size() > 1) {
+
+            painter.setColor(rangecolor);
+            painter.setAlpha(40);
+            float ytm1 = (float) (y0 - (tmMittel + tmMittelDev - ymin) * dy);
+            float ytm2 = (float) (y0 - (tmMittel - tmMittelDev - ymin) * dy);
+            canvas.drawRect(x1, ytm1, w, ytm2, painter);
+
+            painter.setColor(color);
+            painter.setAlpha(255);
+            painter.setStyle(Paint.Style.STROKE);
+
+            float dx1 = (w - x1) / 3f;
+            for (int dec = 0; dec < tmMittelV.size(); dec++) {
+                float ytm = (float) (y0 - (tmMittelV.get(dec) - ymin) * dy);
+                canvas.drawLine(x1 + dec * dx1, ytm, x1 + (dec + 1) * dx1, ytm, painter);
+            }
+
+        }
 
         painter.setAlpha(255);
-        painter.setTextAlign(Paint.Align.CENTER);
+        painter.setStyle(Paint.Style.FILL);
+        float ytm = (float) (y0 - (tmMittel - ymin) * dy);
+        canvas.drawLine(x0, ytm, x0 + xmax * dx, ytm, painter);
         canvas.drawText(String.format("%4.1f°C", tmMittel),
-                xtm,
-                h - textsize / 2, painter);
-
-        canvas.drawLine(xtm, y0, xtm, 0, painter);
+                1,
+                ytm + textsize / 2,
+                painter);
 
         painter.setColor(axiscolor);
 
         painter.setTextAlign(Paint.Align.LEFT);
-        canvas.drawText(String.format("%2.0f°C", xmin), x0, h - textsize / 2, painter);
-        canvas.drawLine(x0, y0, x0, y0 - 10, painter);
+        canvas.drawText(String.format("%2.0f°C", ymin), 1, h - textsize / 2, painter);
+        canvas.drawLine(x0, y0, x0 - 10, y0, painter);
 
-        painter.setTextAlign(Paint.Align.RIGHT);
-        canvas.drawText(String.format("%2.0f°C", xmax), x0 + n * dn, h - textsize / 2, painter);
-        canvas.drawLine(x0 + n * dn, y0, x0 + n * dn, y0 - 10, painter);
+        painter.setTextAlign(Paint.Align.LEFT);
+        canvas.drawText(String.format("%2.0f°C", ymax), 1, textsize, painter);
+        canvas.drawLine(x0 - 10, y0 - n * dn, x0, y0 - n * dn, painter);
 
-        canvas.drawLine(x0, y0, x0 + n * dn, y0, painter);
+        painter.setStyle(Paint.Style.STROKE);
+        canvas.drawRect(x0, y0 - (ymax - ymin) * dy, x1, y0, painter);
 
+        if (tmMittelV != null) {
+            canvas.drawRect(x1, y0 - (ymax - ymin) * dy, w, y0, painter);
+        }
     }
 
     private int w;
@@ -169,11 +168,16 @@ public class DistributionView extends KlimaViewBase implements View.OnClickListe
 
     private int background = 0xff202020;
     private int color = 0xffff00ff;
+    private int rangecolor = 0xffff00ff;
     private float textsize = 18f;
     private float strokewidth = 2;
     private int axiscolor = Color.WHITE;
 
     private Tagesmittel.TvalDistrib[] tempdist = null;
+
+    public void setTmMittelDec(Vector<Double> tmMittelDec) {
+        this.tmMittelV = tmMittelDec;
+    }
 
     public void setTmMittel(double tmMittel) {
         this.tmMittel = tmMittel;
@@ -183,10 +187,28 @@ public class DistributionView extends KlimaViewBase implements View.OnClickListe
     public void onClick(View v) {
         StringBuilder sb = new StringBuilder();
         if (tempdist != null) {
+            sb.append(("Anzahl Tage mit:\n"));
+            int anz = 0;
             for (Tagesmittel.TvalDistrib td : tempdist) {
-                sb.append(String.format("%5.1f°C", td.wert) + ": \t" + String.format("%4d\n", td.anz));
+                anz += td.anz;
             }
-            ((KlimaStatActivity) getContext()).showMessage("Anzahl Tage", sb.toString());
+            for (Tagesmittel.TvalDistrib td : tempdist) {
+                sb.append(String.format("%5.1f°C", td.wert) + ": \t" + String.format("%4d", td.anz) + "\t (" + String.format("%4.1f%%", 100.0 * td.anz / anz) + ")\n");
+            }
         }
+        if (tmMittelV != null) {
+            sb.append("\nMittel in Dekade:\n");
+            for (int j = 0; j < tmMittelV.size(); j++) {
+                sb.append((j + 1) + ": " + String.format("%5.1f°C\n", tmMittelV.get(j)));
+            }
+            sb.append("\nStandardabweichung: " + String.format("%4.1f°C\n", tmMittelDev));
+            sb.append("\n1σ Intervall: " + String.format("[ %4.1f , %4.1f ]°C\n", tmMittel - tmMittelDev, tmMittel + tmMittelDev));
+        }
+
+        ((KlimaStatActivity) getContext()).showMessage("Verteilung Tagesmittel", sb.toString());
+    }
+
+    public void setTmMittelDev(double tmMittelDev) {
+        this.tmMittelDev = tmMittelDev;
     }
 }

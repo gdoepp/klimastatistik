@@ -1,6 +1,8 @@
 package de.gdoeppert.klimastatistik.gui;
 
+import android.annotation.TargetApi;
 import android.graphics.Color;
+import android.os.Build;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -120,6 +122,9 @@ public class ExtremeHandler extends WerteHandler {
         txt = (TextView) overview.findViewById(R.id.tag_heute4);
         txt.setText(String.format("%02d.%02d.", tag, monat));
 
+        txt = (TextView) overview.findViewById(R.id.tag_heute5);
+        txt.setText(String.format("%02d.%02d.", tag, monat));
+
         txt = (TextView) overview.findViewById(R.id.monat_heute3);
         txt.setText(monatsnamen[monat]);
 
@@ -197,11 +202,37 @@ public class ExtremeHandler extends WerteHandler {
             }
         }
 
+        Extreme.Tval tv = tvv.get(0);
+
+        ViewGroup vg = (ViewGroup) overview.findViewById(R.id.extremeNdsWindTag);
+
+        for (int r = 0; r < 5; r++) {
+            if (tv.nds[r] == null || tv.wind == null) {
+                continue;
+            }
+
+            TableRow tr = getOrCreateTableRow(vg, r, Color.rgb(0, 0xa0, 0xf0), Color.rgb(0xb0, 0x1f, 0xff));
+
+            txt = (TextView) tr.getChildAt(0);
+            txt.setText(tv.nds[r].tag);
+
+            txt = (TextView) tr.getChildAt(1);
+            txt.setText(String.format("%4.1f", tv.nds[r].wert));
+
+            txt = (TextView) tr.getChildAt(2);
+            txt.setText(tv.wind[r].tag);
+
+            txt = (TextView) tr.getChildAt(3);
+            txt.setText(String.format("%4.1f", tv.wind[r].wert));
+
+        }
+
+
         if (tvv.size() > 1) {
 
-            Extreme.Tval tv = tvv.get(1);
+            tv = tvv.get(1);
 
-            ViewGroup vg = (ViewGroup) overview.findViewById(R.id.extremeNdsMonat);
+            vg = (ViewGroup) overview.findViewById(R.id.extremeNdsMonat);
 
             for (int r = 0; r < 5; r++) {
                 if (tv.ndsmin[r] == null || tv.ndsmax == null) {
@@ -227,9 +258,9 @@ public class ExtremeHandler extends WerteHandler {
 
         if (tvv.size() > 1) {
 
-            Extreme.Tval tv = tvv.get(1);
+            tv = tvv.get(1);
 
-            ViewGroup vg = (ViewGroup) overview.findViewById(R.id.extremeSonneMonat);
+            vg = (ViewGroup) overview.findViewById(R.id.extremeSonneMonat);
 
             for (int r = 0; r < 5; r++) {
 
@@ -253,6 +284,7 @@ public class ExtremeHandler extends WerteHandler {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private TableRow getOrCreateTableRow(ViewGroup vg, int r, int col1, int col2) {
         TextView txt;
         TableRow tr;
@@ -273,6 +305,9 @@ public class ExtremeHandler extends WerteHandler {
                 txt.setTextSize(TypedValue.COMPLEX_UNIT_PX, textsize);
                 if (j < 3) {
                     txt.setPadding(0, 0, dp20, 0);
+                }
+                if (j % 2 == 1) {
+                    txt.setTextAlignment(TextView.TEXT_ALIGNMENT_TEXT_END);
                 }
                 tr.addView(txt);
             }

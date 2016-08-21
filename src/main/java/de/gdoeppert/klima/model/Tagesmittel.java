@@ -2,6 +2,7 @@ package de.gdoeppert.klima.model;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 public class Tagesmittel extends Wertermittler {
 
@@ -47,11 +48,12 @@ public class Tagesmittel extends Wertermittler {
                 condition += " and tag=" + tagesParam.tag;
             }
 
-            tv = eval(st, stat, von, bis, condition);
+            eval(st, stat, von, bis, condition);
 
             if (tagesParam.tag < 1) {
                 tv.tmDist = getTvalDistrib(st, stat, von, bis, condition);
                 addWetterlage(st, tagesParam.monat, von, bis, condition);
+                calcTempDecade(st, stat, von, bis, condition);
             }
 
         } catch (Exception ex) {
@@ -64,6 +66,10 @@ public class Tagesmittel extends Wertermittler {
 
     }
 
+
+    public Vector<Double> getTempDecade() {
+        return tdecval;
+    }
 
     public Tval getWerte() {
         if (tv == null) {

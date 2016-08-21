@@ -16,6 +16,7 @@
     <declare-styleable name="DistributionView">
         <attr name="strokewidth" format="dimension" />
         <attr name="color" />
+        <attr name="rangecolor" format="color" />
         <attr name="axiscolor" format="color" />
         <attr name="textsize" />
     </declare-styleable>

@@ -86,7 +86,7 @@ public class WinterTable extends TableHandler {
     }
 
     private String formatDate(String dat) {
-        if (dat.length() >= 4) {
+        if (dat != null && dat.length() >= 4) {
             String tag = dat.substring(2, 4);
             String mon = dat.substring(0, 2);
             return tag + "." + mon + ".";

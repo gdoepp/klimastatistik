@@ -35,12 +35,6 @@ public class GradtageTable extends TableHandler {
                 } else return 0;
             }
 
-            /*
-             public String group;
-        public double tm;
-        public double tage;
-        public int groupN;
-             */
 
             @Override
             public String getItem(int i) {
@@ -59,13 +53,15 @@ public class GradtageTable extends TableHandler {
                                     return "Winter";
                             }
                         }
+                        case 1:
+                            return "Heiztage";
                         case 2:
                             return "Gradtage";
                         case 3:
-                            return "Anteil";
-                        case 1:
-                            return "Heiztage";
-
+                            if (mode.equals("0"))
+                                return "Anteil";
+                            else
+                                return "     ";
                     }
 
                 }
@@ -75,12 +71,19 @@ public class GradtageTable extends TableHandler {
                     case 0: {
                         return tv.getGroup();
                     }
+                    case 1:
+                        if (mode.equals("0")) {
+                            return tv.getTageS();
+                        } else {
+                            return String.format("%3.0f", tv.getTage());
+                        }
                     case 2:
                         return tv.getTmS();
                     case 3:
-                        return tv.getAnteil();
-                    case 1:
-                        return tv.getTageS();
+                        if (mode.equals("0"))
+                            return tv.getAnteil();
+                        else
+                            return "     ";
 
                 }
                 return "";
@@ -127,23 +130,24 @@ public class GradtageTable extends TableHandler {
         parm.setCut(activity.getSettings().gradTemp);
         gradtage.setJahre(jahre);
         gradtage.setGradtageParm(parm);
-        Vector<?> result = gradtage.getWerte(mode);
+        if (!mode.equals("0")) {
+            mode = (activity.getSettings().heizmodusJahr ? "1" : "2");
+        }
+        Vector<Gradtage.Tval> result = gradtage.getWerte(mode);
+
         return result;
+
     }
 
     public void setMode(String md) {
         if (md.contains("Jahr")) {
-            dirty = !mode.equals("1");
-            mode = "1";
+            dirty = !mode.equals("2");
+            mode = "2";
             ncols = 3;
         } else if (md.contains("Monat")) {
             dirty = !mode.equals("0");
             mode = "0";
             ncols = 4;
-        } else if (md.contains("Winter")) {
-            dirty = !mode.equals("2");
-            mode = "2";
-            ncols = 3;
         }
 
     }

@@ -74,6 +74,10 @@ public class PreferencesDialog extends DialogFragment implements OnClickListener
         rd = (RadioButton) layout.findViewById(R.id.radioJahr);
         if (activity.getSettings().jahre == Jahre.Periode.jahr) rd.setChecked(true);
         rd.setOnClickListener(this);
+        rd = (RadioButton) layout.findViewById(R.id.gradt_jahr);
+        rd.setChecked(activity.getSettings().heizmodusJahr);
+        rd = (RadioButton) layout.findViewById(R.id.gradt_winter);
+        rd.setChecked(!activity.getSettings().heizmodusJahr);
 
 
         final Button onok = (Button) layout.findViewById(R.id.ok);
@@ -101,6 +105,9 @@ public class PreferencesDialog extends DialogFragment implements OnClickListener
 
                 EditText edGradSchw = addSettingsWin(layout, R.id.gradt_schw, R.id.gradt_schw_decr, R.id.gradt_schw_incr, true);
                 activity.getSettings().gradSchwelle = Float.valueOf(edGradSchw.getText().toString());
+
+                RadioButton rb = (RadioButton) layout.findViewById(R.id.gradt_jahr);
+                activity.getSettings().setHeizmodusJahr(rb.isChecked());
 
                 PreferencesDialog.this.dismiss();
                 Log.d("Preferences", "update");

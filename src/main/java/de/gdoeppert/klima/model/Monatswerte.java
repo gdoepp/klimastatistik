@@ -45,12 +45,12 @@ public class Monatswerte extends Wertermittler {
             }
             String condition = "monat=" + monat;
 
-            tv = eval(st, stat, jahr_s, jahr_s, condition);
+            eval(st, stat, jahr_s, jahr_s, condition);
             if (tv.tage < tageMonat[monat - 1] - 1.5) { // 1 Tag darf fehlen
                 partial = true;
             }
-
             tv.tmDist = getTvalDistrib(st, stat, jahr_s, jahr_s, condition);
+            calcTempDecade(st, stat, jahr_s, jahr_s, condition);
             addWetterlage(st, monat, jahr_s, jahr_s, condition);
 
         } catch (Exception ex) {

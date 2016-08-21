@@ -385,6 +385,8 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
                         setStationAdapter();
                     } else if (cols[0].equals("jahre")) {
                         settings.setJahre(Jahre.Periode.valueOf(cols[1]));
+                    } else if (cols[0].equals("gradTageJahre")) {
+                        getSettings().setHeizmodusJahr(cols[1].equals("Jahr"));
                     }
                     Log.i("KlimaActivity", "Settings: " + cols[0] + "=" + cols[1]);
                 }
@@ -418,6 +420,7 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
             pr.println("gradTemp=" + settings.gradTemp);
             pr.println("statsel=" + getStation().getSelStat().getStat());
             pr.println("jahre=" + settings.jahre.name());
+            pr.println("gradTageJahre=" + (settings.heizmodusJahr ? "Jahr" : "Winter"));
 
             pr.close();
         } catch (FileNotFoundException e) {
@@ -489,10 +492,15 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
         int winTrdTemp = 2;
         float gradSchwelle = 15f;
         float gradTemp = 20f;
+        boolean heizmodusJahr = true;
         Jahre.Periode jahre = Jahre.Periode.alle;
 
         public void setJahre(Jahre.Periode jahre) {
             this.jahre = jahre;
+        }
+
+        public void setHeizmodusJahr(boolean heizmodusJahr) {
+            this.heizmodusJahr = heizmodusJahr;
         }
     }
 

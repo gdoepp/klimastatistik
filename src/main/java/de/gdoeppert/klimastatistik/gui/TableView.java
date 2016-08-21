@@ -158,7 +158,7 @@ public class TableView extends KlimaViewBase {
                 int r = i / adapter.getColumns();
                 int c = i % adapter.getColumns();
 
-                String s = (String) adapter.getItem(i);
+                String s = "|" + (String) adapter.getItem(i) + "|";
                 Rect bounds = new Rect();
                 painter.getTextBounds(s, 0, s.length(), bounds);
                 cellw[c] = Math.max(cellw[c], bounds.width());

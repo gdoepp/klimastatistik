@@ -1,6 +1,7 @@
 package de.gdoeppert.klima.model;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +18,10 @@ public class Wertermittler {
     Station station;
 
     double[] tageMonat = new double[]{31, 28.25, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
     Tval tv = null;
+
+    Vector<Double> tdecval = null;
 
     public DbBase getDbBean() {
         return dbBean;
@@ -35,12 +39,13 @@ public class Wertermittler {
         this.station = station;
     }
 
-    Tval eval(Statement st, String stat, String von, String bis, String condition)
+    protected void eval(Statement st, String stat, String von, String bis, String condition)
             throws SQLException {
 
         ResultSet rs = st
-                .executeQuery("select monat, avg(tm) as tm, avg(tn), avg(tx), min(tn), max(tx), avg(rs)," +
-                        " avg(nm), avg(sd), avg(schnee), avg(schnee>0), avg(rs>0), avg(sd>= ( 13-abs(monat-6) - (abs(monat-6)>3))), avg(sd<=1), count(*)  "
+                .executeQuery("select monat, avg(tm) as tm, avg(tn), avg(tx), min(tn), max(tx), avg(rs),"
+                        + " avg(nm), avg(sd), avg(schnee), avg(schnee>0), avg(rs>0), avg(sd>= ( 13-abs(monat-6) - (abs(monat-6)>3))),"
+                        + " avg(sd<=1), count(*)  "
                                 + " from " + dbBean.getSchema() + "tageswerte "
                                 + stat
                                 + " and jahr between "
@@ -50,9 +55,10 @@ public class Wertermittler {
                                 + " and " + condition
                 );
 
-        Tval tv = new Tval();
+        tv = new Tval();
         if (rs.next()) {
             try {
+
 
                 int monat = rs.getInt(1);
 
@@ -97,13 +103,11 @@ public class Wertermittler {
                     tv.truebAnt = rs.getDouble(14);
                 }
                 tv.tage = rs.getInt(15);
+
             } catch (Exception e) {
             }
         } /* while (rs.next()) */
         rs.close();
-
-
-        return tv;
     }
 
     void addWetterlage(Statement st, int monat_i, String von, String bis, String condition) {
@@ -151,6 +155,38 @@ public class Wertermittler {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    public void calcTempDecade(Statement st, String stat, String von, String bis, String condition)
+            throws SQLException {
+
+        Vector<Double> tvv = new Vector<>();
+        ResultSet rs = st
+                .executeQuery("select avg(tm) as tm, avg(tm*tm), count(*), ((tag-1) / 10) - (tag==31) as decade "
+                        + " from " + dbBean.getSchema() + "tageswerte "
+                        + stat
+                        + " and jahr between "
+                        + von
+                        + " and "
+                        + bis
+                        + " and " + condition
+                        + " group by decade order by decade"
+                );
+        double tms = 0;
+        double tm2s = 0;
+        int n = 0;
+        while (rs.next()) {
+            tvv.add(rs.getDouble(1));
+            tms += rs.getDouble(1);
+            tm2s += rs.getDouble(2);
+            n += rs.getInt(3);
+        }
+        tdecval = tvv;
+        double s = tm2s / 3 - (tms / 3) * (tms / 3);
+        s *= (1.0 * n) / (n - 1);
+        s = Math.sqrt(s);
+        tv.tm_dev = s;
+        Log.d("Wertermittler", "dev=" + s);
     }
 
     @NonNull
@@ -226,6 +262,7 @@ public class Wertermittler {
         public Wetterlage wl;
 
         public TvalDistrib[] tmDist = null;
+        public double tm_dev;
 
         public String getMonat() {
             return monat;

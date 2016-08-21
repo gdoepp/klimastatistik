@@ -1,5 +1,7 @@
 package de.gdoeppert.klima.model;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -124,13 +126,18 @@ public class Frostindex implements Serializable {
             while (rs.next()) {
                 try {
                     Tval frost = new Tval();
-                    frost.winter = rs.getString(1);
+                    frost.winter = (rs.getInt(1) - 1) + "-" + rs.getString(1);
                     frost.frosttage = rs.getInt(2);
                     frost.eistage = rs.getInt(3);
                     frost.kaeltesumme = rs.getFloat(4);
                     frost.schneetage = rs.getInt(5);
-                    frost.ersterFrost = rs.getString(6).substring(4);
-                    frost.letzterFrost = rs.getString(7).substring(4);
+                    if (rs.getString(6).length() > 4 && rs.getInt(6) < 21000000) {
+                        frost.ersterFrost = rs.getString(6).substring(4);
+                        Log.d("frost", "efrost " + rs.getString(6));
+                    }
+                    if (rs.getString(7).length() > 4) {
+                        frost.letzterFrost = rs.getString(7).substring(4);
+                    }
                     werte.add(frost);
 
                 } catch (SQLException ex) {

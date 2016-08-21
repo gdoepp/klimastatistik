@@ -32,7 +32,7 @@ public class SommerTable extends TableHandler {
             @Override
             public int getCount() {
                 if (tvals != null) {
-                    return tvals.size() * ncols;
+                    return (tvals.size() + 1) * ncols;
                 } else return 0;
             }
 

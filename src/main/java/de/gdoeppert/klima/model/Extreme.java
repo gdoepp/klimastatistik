@@ -57,6 +57,7 @@ public class Extreme {
         public TvalRecord[] sonnemax = null;
         public TvalRecord[] nds = null;
         public TvalRecord[] schnee = null;
+        public TvalRecord[] wind = null;
         public Tagesmittel.TvalDistrib[] tmDist = null;
     }
 
@@ -96,6 +97,7 @@ public class Extreme {
         tv.max = getTvalRecords(st, stat, condition, "tx", "desc");
 
         tv.nds = getTvalRecords(st, stat, condition, "rs", "desc");
+        tv.wind = getTvalRecords(st, stat, condition, "fm", "desc");
 
         if (tagesParam.monat < 5 || tagesParam.monat > 9) {
 

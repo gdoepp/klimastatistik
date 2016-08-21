@@ -9,8 +9,8 @@ import java.sql.Statement;
 import java.util.Map;
 import java.util.TreeMap;
 
-/** Station des DWD
- *
+/**
+ * Station des DWD
  */
 public class Station implements Serializable {
 
@@ -96,7 +96,8 @@ public class Station implements Serializable {
         } else return new Stat[0];
     }
 
-    /** alle verfügbaren Stationen
+    /**
+     * alle verfügbaren Stationen
      *
      * @return Array der Stationen
      */

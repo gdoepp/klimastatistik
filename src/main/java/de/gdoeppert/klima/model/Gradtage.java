@@ -190,7 +190,7 @@ public class Gradtage implements Serializable {
     }
 
     public Vector<Tval> getWerte(String w_s) {
-        if (werte == null) {
+        if (werte == null || !w_s.equals(wertTyp)) {
             try {
                 calc(w_s);
             } catch (SQLException e) {

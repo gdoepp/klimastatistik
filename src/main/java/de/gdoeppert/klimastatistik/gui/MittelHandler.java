@@ -56,7 +56,6 @@ public class MittelHandler extends WerteHandler implements View.OnClickListener,
 
         tp.monat = heute.get(Calendar.MONTH) + 1;
         tp.tag = heute.get(Calendar.DAY_OF_MONTH);
-
         monat = tp.monat;
         tag = tp.tag;
 
@@ -89,6 +88,8 @@ public class MittelHandler extends WerteHandler implements View.OnClickListener,
             tp.tag = -1;
             tm.setTagesParam(tp);
             tv = tm.getWerte();
+
+            tdecade = tm.getTempDecade();
             if (tv != null) {
                 tvv.add(tv);
             }
@@ -151,6 +152,12 @@ public class MittelHandler extends WerteHandler implements View.OnClickListener,
             txt = (TextView) overview.findViewById(R.id.mitt_mitt);
             txt.setText(tv.getTmS());
 
+            txt = (TextView) overview.findViewById(R.id.min_abs);
+            txt.setText(tv.getTnkS());
+
+            txt = (TextView) overview.findViewById(R.id.max_abs);
+            txt.setText(tv.getTxkS());
+
             txt = (TextView) overview.findViewById(R.id.max_mitt);
             txt.setText(tv.getTxS());
 
@@ -198,7 +205,9 @@ public class MittelHandler extends WerteHandler implements View.OnClickListener,
             DistributionView dv = (DistributionView) overview.findViewById(R.id.distribution);
             if (dv != null && tv.tmDist != null) {
                 dv.setDistribution(tv.tmDist);
-                dv.setTmMittel(tv.getTm());
+                dv.setTmMittelDec(tdecade);
+                dv.setTmMittelDev(tv.tm_dev);
+                dv.setTmMittel(tv.tm);
             }
 
 
@@ -211,6 +220,12 @@ public class MittelHandler extends WerteHandler implements View.OnClickListener,
 
             txt = (TextView) overview.findViewById(R.id.max_mitt_mon);
             txt.setText(tv.getTxS());
+
+            txt = (TextView) overview.findViewById(R.id.min_abs_mon);
+            txt.setText(tv.getTnkS());
+
+            txt = (TextView) overview.findViewById(R.id.max_abs_mon);
+            txt.setText(tv.getTxkS());
 
 
             txt = (TextView) overview.findViewById(R.id.rs_mitt_mon);
@@ -272,6 +287,7 @@ public class MittelHandler extends WerteHandler implements View.OnClickListener,
 
     private View overview = null;
     private Vector<Tagesmittel.Tval> tvv = null;
+    private Vector<Double> tdecade = null;
     private Tagesmittel.TagesParam tp = new Tagesmittel.TagesParam();
 
     int monat = 99;

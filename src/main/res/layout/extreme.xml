@@ -87,6 +87,38 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/extremeTempMonat" />
 
+            <!--       Nds,Wind Tag                     -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Niederschläge, Wind max"
+                    android:textColor="#7560f2"
+                    android:textSize="18sp"></TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/tag_heute5"
+                    android:textColor="#745ef2"
+                    android:textSize="18sp"></TextView>
+            </LinearLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/extremeNdsWindTag" />
+
             <!--       Nds Monat                     -->
 
             <LinearLayout

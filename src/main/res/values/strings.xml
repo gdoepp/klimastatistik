@@ -21,9 +21,8 @@
         <item>Trend Temperatur</item>
         <item>Sommer</item>
         <item>Winter</item>
-        <item>Heizung/Jahr</item>
-        <item>Heizung/Winter</item>
-        <item>Heizung/Monate</item>
+        <item>Heizung/Historie Jahressumme</item>
+        <item>Heizung/Monatswerte gemittelt</item>
     </string-array>
 
     <string-array name="contentClasses">
@@ -36,7 +35,6 @@
         <item>TrendView</item>
         <item>SommerTable</item>
         <item>WinterTable</item>
-        <item>GradtageTable</item>
         <item>GradtageTable</item>
         <item>GradtageTable</item>
     </string-array>
@@ -57,7 +55,8 @@
         trüben Tagen scheint die Sonne höchstens eine Stunde.
 
         Bei den Wetterlagen wird die Strömungsrichtung (aus NW, NO, SO, SW oder ohne) und der Charakter (feucht-trocken)
-        unterschieden. Angegeben sind die Prozentsätze, an wie vielen Tagen im Beobachtungszeitraum die jeweilige
+        unterschieden. Sie gelten für ganz Deutschland.
+        Angegeben sind die Prozentsätze, an wie vielen Tagen im Beobachtungszeitraum die jeweilige
         Wetterlage aufgetreten ist.\n
         \n
         Der auf dieser Seite eingestellte Tag (Tasten [--], [-], [+], [++], Tippen auf das Datum) gilt auch für die Extremwerte und die Historie
@@ -66,7 +65,7 @@
     </string>
 
         <string name="hist_help">
-        Die Mittelwerte auf dieser Seite beziehen sich auf das eingestellte Jahr. Nicht alle Stationen
+        Die Mittelwerte auf dieser Seite beziehen sich auf den Monat im eingestellten Jahr. Nicht alle Stationen
         bieten lückenlose Daten. Dies gilt besonders für die Sonnenscheinstunden.\n
 
         Bei den Sonnenstunden und bei den Niederschlägen wird die Monatssumme angezeigt. Wenn die Daten
@@ -81,7 +80,8 @@
         trüben Tagen scheint die Sonne höchstens eine Stunde.
 
         Bei den Wetterlagen wird die Strömungsrichtung (aus NW, NO, SO, SW oder ohne) und der Charakter (feucht-trocken)
-        unterschieden. Angegeben sind die Prozentsätze, an wie vielen Tagen im Monat die jeweilige
+        unterschieden. Sie gelten für ganz Deutschland.
+        Angegeben sind die Prozentsätze, an wie vielen Tagen im Monat die jeweilige
         Wetterlage aufgetreten ist.\n
         \n
         Das Jahr kann mit den Tasten [+] und [-] geblättert werden, durch Tippen auf das Jahr kann man einen Termindialog öffnen.
@@ -90,7 +90,7 @@
     </string>
 
     <string name="extreme_help">
-        Die höchsten oder tiefsten Temperaturen bzw. die Extreme von Niederschlägen, Sonnenscheinstunden und Schneehöhen
+        Die höchsten oder tiefsten Temperaturen bzw. die Extreme von Niederschlägen, Wind, Sonnenscheinstunden und Schneehöhen
         beziehen sich auf den auf der Mittelwerte-Seite eingestellten Tag bzw. Monat.\n
         In den Einstellungen kann man auswählen, welche Vergleichsperiode herangezogen werden soll. Nicht alle Stationen
         bieten für den Zeitraum lückenlose Daten. Das gilt besonders für die Sonnenscheinstunden.
@@ -150,9 +150,8 @@
           sind zunächst 20°C) falls die Tagesmitteltemperatur unter der Heizschwelle (eingestellt sind
           zunächst 15°C) liegt. In diesem Fall wird der Tag als Heiztag gezählt. Die Basistemperatur und
           die Heizschwelle können in den Einstellungen verändert werden.\n
-          Es gibt eine Seite zur Auswertung pro Kalenderjahr, eine Seite zur Auswertung pro Winter und eine für die mittleren
-          Monatswerte im Beobachtungszeitraum (je nach eingestellter Periode und Verfügbarkeit der Daten zur
-          ausgewählten Station).\n
+          Außerdem kann man wählen, ob der historische Verlauf pro Kalenderjahr oder pro Winter angezeigt werden soll.\n
+          Die Monatswerte sind über alle Jahre gemittelt.\n
           \n
           Wichtig: alle Angaben sind ohne Gewähr. Bitte für rechtlich verbindliche Zwecke die Daten
           direkt beim DWD oder anderen Institutionen beschaffen.
@@ -171,7 +170,7 @@
          You should have received a copy of the GNU General Public License
             along with this program.  If not, see http://www.gnu.org/licenses/.\n\n
 
-	    Die Programmquellen sind erhältlich unter http://gdoeppert.de/android/klimastatistik_src.zip.\n\n
+	    Die Programmquellen sind erhältlich unter https://github.com/gdoepp/klimastatistik.\n\n
 
         Der Autor übernimmt keine Gewährleistung für die Richtigkeit der angezeigten Daten oder
         für irgendeine Nutzbarkeit der Anwendung. Verlässliche Daten können vom DWD oder von
@@ -194,7 +193,8 @@
         Auswertungsperiode: 1961-1990, 1981-2010, alle verfügbaren Daten oder Einschränkung auf das weiter unten
         eingegebene Bezugsjahr. Letzteres wird sonst nur beim Jahresvergleich im Thermopluviogramm benutzt.
         Für die anderen Diagramme können Glättungsfenster eingestellt werden. Sinnvoll sind etwa 0-5 Tage bzw. Jahre.\n
-        Für die Auswertung der Heizdaten können die Zieltemperatur und die Heizschwelle eingestellt werden.
+        Für die Auswertung der Heizdaten können die Zieltemperatur und die Heizschwelle eingestellt werden. Bei der
+        Historie der Heizwerte kann man zwischen Summe pro Kalenderjahr oder pro Winter wählen.
         </string>
 
 
