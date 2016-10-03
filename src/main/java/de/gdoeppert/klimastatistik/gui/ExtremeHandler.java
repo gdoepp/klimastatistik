@@ -207,24 +207,28 @@ public class ExtremeHandler extends WerteHandler {
         ViewGroup vg = (ViewGroup) overview.findViewById(R.id.extremeNdsWindTag);
 
         for (int r = 0; r < 5; r++) {
-            if (tv.nds[r] == null || tv.wind == null) {
+            if (tv.nds[r] == null && tv.wind[r] == null) {
                 continue;
             }
 
             TableRow tr = getOrCreateTableRow(vg, r, Color.rgb(0, 0xa0, 0xf0), Color.rgb(0xb0, 0x1f, 0xff));
 
-            txt = (TextView) tr.getChildAt(0);
-            txt.setText(tv.nds[r].tag);
+            if (tv.nds[r] != null) {
+                txt = (TextView) tr.getChildAt(0);
+                txt.setText(tv.nds[r].tag);
 
-            txt = (TextView) tr.getChildAt(1);
-            txt.setText(String.format("%4.1f", tv.nds[r].wert));
+                txt = (TextView) tr.getChildAt(1);
+                txt.setText(String.format("%4.1f", tv.nds[r].wert));
+            }
 
-            txt = (TextView) tr.getChildAt(2);
-            txt.setText(tv.wind[r].tag);
+            if (tv.wind[r] != null) {
 
-            txt = (TextView) tr.getChildAt(3);
-            txt.setText(String.format("%4.1f", tv.wind[r].wert));
+                txt = (TextView) tr.getChildAt(2);
+                txt.setText(tv.wind[r].tag);
 
+                txt = (TextView) tr.getChildAt(3);
+                txt.setText(String.format("%4.1f", tv.wind[r].wert));
+            }
         }
 
 
