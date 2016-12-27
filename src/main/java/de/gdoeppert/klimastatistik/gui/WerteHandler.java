@@ -17,6 +17,9 @@ public abstract class WerteHandler extends KlimaHandler implements DatePickerDia
 
     protected final String[] monatsnamen = {"Ges", "Januar", "Februar", "März", "April",
             "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"};
+    protected final String[] monatsnamen_k = {"Ges", "Jan", "Feb", "März", "April",
+            "Mai", "Juni", "Juli", "Aug", "Sep", "Okt", "Nov", "Dez"};
+
 
     protected void showDatePicker() {
         DateDialog date = new DateDialog();

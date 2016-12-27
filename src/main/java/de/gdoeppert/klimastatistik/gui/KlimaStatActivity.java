@@ -27,6 +27,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -159,7 +160,6 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
         } else if (id == R.id.action_settings) {
 
             PreferencesDialog settings = new PreferencesDialog();
-            settings.setActivity(this);
             settings.show(this.getSupportFragmentManager(), "SettingsDialog");
             return true;
         } else if (id == R.id.action_help) {
@@ -485,7 +485,7 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
     }
 
 
-    static class Settings {
+    static class Settings implements Serializable {
         int vglJahr = -1;
         int winTemp = 0;
         int winPhen = 2;

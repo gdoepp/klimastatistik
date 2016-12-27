@@ -21,6 +21,8 @@ import de.gdoeppert.klimastatistik.R;
  */
 public class HistorieHandler extends WerteHandler implements View.OnClickListener {
 
+    private Vector<Double> tdecade;
+
     @Override
     public int getHelpID() {
         return R.string.hist_help;
@@ -88,7 +90,7 @@ public class HistorieHandler extends WerteHandler implements View.OnClickListene
         if (tv != null) {
             tvv.add(tv);
         }
-
+        tdecade = tm.getTempDecade();
         return tvv;
     }
 
@@ -117,6 +119,8 @@ public class HistorieHandler extends WerteHandler implements View.OnClickListene
 
         txt = (TextView) overview.findViewById(R.id.monat);
         txt.setText(monatsnamen[monat]);
+        txt = (TextView) overview.findViewById(R.id.monat_heute2);
+        txt.setText(monatsnamen_k[monat] + String.format(" %04d", jahr));
 
         TableRow row = (TableRow) overview.findViewById(R.id.row_schneeanteil);
         row.setVisibility(monat < 5 || monat > 9 ? View.VISIBLE : View.GONE);
@@ -175,6 +179,9 @@ public class HistorieHandler extends WerteHandler implements View.OnClickListene
             if (dv != null && tv.tmDist != null) {
                 dv.setDistribution(tv.tmDist);
                 dv.setTmMittel(tv.getTm());
+                dv.setTmMittelDec(tdecade);
+                dv.setTmMittelDev(tv.tm_dev);
+
             }
 
             WetterlagenView wv = (WetterlagenView) overview.findViewById(R.id.wlrichtung_mon);

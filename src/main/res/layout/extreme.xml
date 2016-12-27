@@ -100,7 +100,27 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Niederschläge, Wind max"
+                    android:text="Niederschläge"
+                    android:textColor="#00c0f0"
+                    android:textSize="18sp"></TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Wind"
+                    android:textColor="#b01ff0"
+                    android:textSize="18sp"></TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="max"
                     android:textColor="#7560f2"
                     android:textSize="18sp"></TextView>
 

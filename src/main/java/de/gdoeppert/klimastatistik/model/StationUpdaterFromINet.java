@@ -57,6 +57,7 @@ public class StationUpdaterFromINet extends StationUpdater implements Closeable 
 
         InputStream finList = ftpClient.retrieveFileStream(
                 "/pub/CDC/observations_germany/climate/daily/kl/recent/KL_Tageswerte_Beschreibung_Stationen.txt");
+
         rc = ftpClient.getReplyCode();
         Log.i("UpdaterNet", "ftp retrieve rc = " + rc);
         if (rc == 150) {

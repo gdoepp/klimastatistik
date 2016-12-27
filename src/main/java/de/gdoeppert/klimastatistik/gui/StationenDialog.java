@@ -1,5 +1,6 @@
 package de.gdoeppert.klimastatistik.gui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
 import android.net.ConnectivityManager;
@@ -46,6 +47,12 @@ public class StationenDialog extends DialogFragment implements AdapterView.OnIte
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity = (KlimaStatActivity) activity;
+        Log.i("Stationen", "attached activity");
+    }
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -55,6 +62,11 @@ public class StationenDialog extends DialogFragment implements AdapterView.OnIte
         getDialog().setTitle("Stationen");
 
         TextView txt = (TextView) layout.findViewById(R.id.station);
+
+        if (activity == null) {
+            activity = (KlimaStatActivity) getActivity();
+            if (activity == null) return layout;
+        }
 
         Stat selstat = activity.getStation().getSelStat();
 

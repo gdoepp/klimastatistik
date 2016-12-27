@@ -187,14 +187,14 @@ public class DistributionView extends KlimaViewBase implements View.OnClickListe
     public void onClick(View v) {
         StringBuilder sb = new StringBuilder();
         if (tempdist != null) {
-            sb.append(("Anzahl Tage mit:\n"));
             int anz = 0;
             for (Tagesmittel.TvalDistrib td : tempdist) {
                 anz += td.anz;
             }
             for (Tagesmittel.TvalDistrib td : tempdist) {
-                sb.append(String.format("%5.1f°C", td.wert) + ": \t" + String.format("%4d", td.anz) + "\t (" + String.format("%4.1f%%", 100.0 * td.anz / anz) + ")\n");
+                sb.insert(0,String.format("%5.1f°C", td.wert) + ": \t" + String.format("%4d", td.anz) + "\t (" + String.format("%4.1f%%", 100.0 * td.anz / anz) + ")\n");
             }
+            sb.insert(0,"Anzahl Tage mit:\n");
         }
         if (tmMittelV != null) {
             sb.append("\nMittel in Dekade:\n");

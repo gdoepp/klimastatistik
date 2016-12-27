@@ -40,7 +40,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="löschen ab" />
+                    android:text="löschen ab " />
 
                 <TextView
                     android:layout_width="wrap_content"

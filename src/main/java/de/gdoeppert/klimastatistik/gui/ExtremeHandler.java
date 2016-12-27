@@ -211,7 +211,7 @@ public class ExtremeHandler extends WerteHandler {
                 continue;
             }
 
-            TableRow tr = getOrCreateTableRow(vg, r, Color.rgb(0, 0xa0, 0xf0), Color.rgb(0xb0, 0x1f, 0xff));
+            TableRow tr = getOrCreateTableRow(vg, r, Color.rgb(0, 0xc0, 0xf0), Color.rgb(0xb0, 0x1f, 0xf0));
 
             if (tv.nds[r] != null) {
                 txt = (TextView) tr.getChildAt(0);
@@ -243,7 +243,7 @@ public class ExtremeHandler extends WerteHandler {
                     continue;
                 }
 
-                TableRow tr = getOrCreateTableRow(vg, r, Color.rgb(0, 0xa0, 0xf0), Color.rgb(0, 0xc0, 0xff));
+                TableRow tr = getOrCreateTableRow(vg, r, Color.rgb(0, 0xc0, 0xf0), Color.rgb(0, 0xc0, 0xff));
 
                 txt = (TextView) tr.getChildAt(0);
                 txt.setText(tv.ndsmin[r].tag);

@@ -2,6 +2,7 @@ package de.gdoeppert.klima.model;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 public class Monatswerte extends Wertermittler {
 
@@ -61,6 +62,9 @@ public class Monatswerte extends Wertermittler {
         }
         return "ok";
 
+    }
+    public Vector<Double> getTempDecade() {
+        return tdecval;
     }
 
     public Tval getWerte() {

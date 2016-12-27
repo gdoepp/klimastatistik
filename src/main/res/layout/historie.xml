@@ -95,7 +95,7 @@
             <de.gdoeppert.klimastatistik.gui.DistributionView
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-
+                klima:rangecolor="#00ffff"
                 klima:axiscolor="#f0f0f0"
                 klima:strokewidth="1dp"
                 klima:color="#00ff00"
@@ -650,7 +650,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Häufigkeit Wetterlagen"
+                    android:text="Wetterlagen Mitteleuropa"
                     android:textColor="#f0f0f0"
                     android:textSize="18sp"></TextView>
 
