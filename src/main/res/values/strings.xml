@@ -159,7 +159,9 @@
 
     <string name="info">
         Klimastatistik\n\n
-        Diese Anwendung beruht auf Daten des deutschen Wetterdiensts (dwd.de). \n\n
+        Diese Anwendung beruht auf Daten des deutschen Wetterdiensts (http://www.dwd.de). Die
+        heruntergeladenen Originaldaten werden von der Anwendung selektiert und mit
+        eigenen Rechenformeln verdichtet.\n\n
 
         Die Anwendung benutzt Bibliotheken von Google und aus dem Apache-Projekt.
     \n\n
