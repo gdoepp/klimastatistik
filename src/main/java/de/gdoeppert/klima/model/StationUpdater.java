@@ -280,8 +280,6 @@ public class StationUpdater {
         try {
             String sql = "insert into " + schema + "tageswerte(stat, jahr, monat, tag, "
 
-                    //+"fm, qual, rs, sd, schnee, nm, pm, tm, um, tx, tn, tnb, tm0"
-
                   + "tm, tm0, tx, tn, tnb, pm, rs, fm, nm, sd, um, schnee, qual"
                + ") values(?,?,?,?,"
                     + "?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -293,22 +291,8 @@ public class StationUpdater {
 
             pst = dbBean.getDb().prepareStatement(sql);
 
-            //STATIONS_ID;MESS_DATUM;QN_3;  FX;  FM;QN_4; RSK;RSKF; SDK;SHK_TAG;  NM; VPM;  PM; TMK; UPM; TXK; TNK; TGK;
-
-            /* String[] fnames = { "STATIONS_ID", "MESS_DATUM", null, null, "LUFTTEMPERATUR", null,
-                    "LUFTTEMPERATUR_MAXIMUM", "LUFTTEMPERATUR_MINIMUM", "LUFTTEMP_AM_ERDB_MINIMUM",
-                    "LUFTDRUCK_STATIONSHOEHE", "NIEDERSCHLAGSHOEHE", "WINDGESCHWINDIGKEIT", "BEDECKUNGSGRAD",
-                    "SONNENSCHEINDAUER", "REL_FEUCHTE", "SCHNEEHOEHE", "QUALITAETS_NIVEAU" };
-            */
             String[] fnames = {"STATIONS_ID", "MESS_DATUM", null, null,
                     "TMK", null, "TXK", "TNK", "TGK", "PM", "RSK", "FM", "NM", "SDK", "UPM", "SHK_TAG", "QN_4"};
-            /*
-
-                    "FM", "QN_4",
-                    "RSK", null, "SDK", "SHK_TAG", "NM",
-                    null, "PM", "TMK", "UPM",
-                    "TXK", "TNK", "TGK", "TMK"};
-*/
 
             int[] fieldId = null;
             int[] typeId = new int[17 + 1];
