@@ -91,7 +91,8 @@
 
     <string name="extreme_help">
         Die höchsten oder tiefsten Temperaturen bzw. die Extreme von Niederschlägen, Wind, Sonnenscheinstunden und Schneehöhen
-        beziehen sich auf den auf der Mittelwerte-Seite eingestellten Tag bzw. Monat.\n
+        beziehen sich auf den auf der Mittelwerte-Seite eingestellten Tag bzw. Monat. Die Niederschläge sind in mm, der Wind in m/s,
+        die Schneehöhen in cm angegeben.\n
         In den Einstellungen kann man auswählen, welche Vergleichsperiode herangezogen werden soll. Nicht alle Stationen
         bieten für den Zeitraum lückenlose Daten. Das gilt besonders für die Sonnenscheinstunden.
 
@@ -109,7 +110,7 @@
     </string>
 
         <string name="jahr_phen_help">
-        Dieses Diagramm zeigt die mittleren Tageswerte für den Niederschlag in mm, die Windstärke, die Sonnenscheinstunden,
+        Dieses Diagramm zeigt die mittleren Tageswerte für den Niederschlag in mm, die Windgeschwindigkeit, die Sonnenscheinstunden,
             die Bewölkung in Achteln und für die relative Luftfeuchtigkeit in Prozent. Wegen der großen Schwankungen
             von Tag zu Tag werden diese Werte am Besten über mehrere Tage geglättet. Dies kann man in den Einstellungen
             festlegen.\n\n

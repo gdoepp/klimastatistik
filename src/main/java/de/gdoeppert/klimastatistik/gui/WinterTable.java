@@ -22,8 +22,8 @@ public class WinterTable extends TableHandler {
 
         return new KlimaGridAdapter(activity) {
 
-            final int ncols = 7;
-            private String[] colName = {"Jahr", "Kältesumme", "Frosttage", "Eistage", "Schneetage", "erster Frost", "letzter Frost"};
+            final int ncols = 8;
+            private String[] colName = {"Jahr", "Kältesumme", "Eistage", "Schneetage", "Frosttage", "Bodenfrosttage", "erster Bodenfrost", "letzter Bodenfrost"};
 
             @Override
             public int getColumns() {
@@ -36,16 +36,6 @@ public class WinterTable extends TableHandler {
                     return (tvals.size() + 1) * ncols;
                 } else return 0;
             }
-
-            /*
-              max_frostindex = 0;
-            max_kaelteperiode_tage = 0;
-            beginn_max_kaelteperiode = "";
-            schneetage = 0;
-            winter = "";
-            beginn_fruehling = null;
-            kaeltesumme = 0;
-             */
 
             @Override
             public String getItem(int i) {
@@ -61,16 +51,18 @@ public class WinterTable extends TableHandler {
                     }
                     case 1:
                         return tv.getKaeltesummeS();
-                    case 2:
-                        return String.valueOf(tv.getFrosttage());
-                    case 3:
-                        return String.valueOf(tv.getEistage());
                     case 4:
+                        return String.valueOf(tv.getFrosttage());
+                    case 2:
+                        return String.valueOf(tv.getEistage());
+                    case 3:
                         return String.valueOf(tv.getSchneetage());
-                    case 5:
-                        return formatDate(tv.getErsterFrost());
                     case 6:
+                        return formatDate(tv.getErsterFrost());
+                    case 7:
                         return formatDate(tv.getLetzterFrost());
+                    case 5:
+                        return String.valueOf(tv.getBodenfrosttage());
 
                 }
                 return "";

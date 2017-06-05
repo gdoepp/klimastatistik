@@ -172,6 +172,7 @@ public class TableView extends KlimaViewBase {
                 w += (cellw[j] + padding);
             }
             h = adapter.getCount() / adapter.getColumns() * (cellh + padding);
+            w += 5*padding;
             return this;
         }
     }

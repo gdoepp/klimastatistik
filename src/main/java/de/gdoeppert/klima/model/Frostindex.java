@@ -53,6 +53,7 @@ public class Frostindex implements Serializable {
         public int schneetage;
         public String ersterFrost;
         public double kaeltesumme;
+        public int bodenfrosttage;
 
         public String getErsterFrost() {
             return ersterFrost;
@@ -89,6 +90,10 @@ public class Frostindex implements Serializable {
         public double getKaeltesumme() {
             return kaeltesumme;
         }
+
+        public int getBodenfrosttage() {
+            return bodenfrosttage;
+        }
     }
 
     public String calc() throws SQLException {
@@ -110,7 +115,7 @@ public class Frostindex implements Serializable {
             }
 
             select = "select jahr+monat/7 as winter, count(nullif(tn>=0,1)), count(nullif(tx>=0,1)), -sum(tm*(tm<0)), count(nullif(schnee=0,1)), " +
-                    " min( (jahr*10000+monat*100+tag) * (3-(tn < 0)*2)), max( (jahr*10000+monat*100+tag) * (tn < 0))" +
+                    " min( (jahr*10000+monat*100+tag) * (3-(tnb < 0)*2)), max( (jahr*10000+monat*100+tag) * (tnb < 0)), count(nullif(tnb>=0,1))" +
                     " from " + dbBean.getSchema() + "tageswerte "
                     + stat
                     + "  and jahr between "
@@ -138,6 +143,8 @@ public class Frostindex implements Serializable {
                     if (rs.getString(7).length() > 4) {
                         frost.letzterFrost = rs.getString(7).substring(4);
                     }
+                    frost.bodenfrosttage = rs.getInt(8);
+
                     werte.add(frost);
 
                 } catch (SQLException ex) {
