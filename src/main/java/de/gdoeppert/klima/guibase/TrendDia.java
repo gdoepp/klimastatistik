@@ -17,14 +17,17 @@ public class TrendDia {
             return;
         }
 
-        writer.start();
-
         idx0 = 0;
-        while (jahre.get(idx0) == null)
+        while (idx0 < jahre.size() && jahre.get(idx0) == null)
             idx0++;
         idx1 = jahre.size() - 1;
-        while (jahre.get(idx1) == null)
+        while (idx1 > 0 && jahre.get(idx1) == null)
             idx1--;
+        if (idx0>idx1) {
+            return;
+        }
+
+        writer.start();
 
         double mnx = jahre.get(idx0).jahr;
         double mxx = jahre.get(idx1).jahr;
