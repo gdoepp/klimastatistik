@@ -6,6 +6,7 @@
     <string name="action_help">Hilfe</string>
     <string name="cancel">Abbrechen</string>
     <string name="updateStat">Station aktualisieren</string>
+    <string name="importList">Liste aktualisieren</string>
     <string name="updateAll">alle aktualisieren</string>
     <string name="import_station">importieren</string>
     <string name="local_station">nahegelegene</string>

@@ -186,6 +186,27 @@ public class StationenDialog extends DialogFragment implements AdapterView.OnIte
             }
         });
 
+        final Button onimplist = (Button) layout.findViewById(R.id.importList);
+
+        onimplist.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                if (isNetworkAvailable(activity)) {
+
+                    UpdateTask upd = new UpdateTask(activity, UpdateTask.Operation.import_stats, null);
+                    upd.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, activity);
+
+                    activity.setStationenDirty();
+                    StationenDialog.this.dismiss();
+                } else {
+                    activity.showMessage("Stationen", "kein Netzzugriff");
+                }
+
+            }
+        });
+
         final Button onhelp = (Button) layout.findViewById(R.id.stat_help);
 
         onhelp.setOnClickListener(new OnClickListener() {

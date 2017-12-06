@@ -185,57 +185,68 @@ public class StationUpdater {
 
     protected void insertStationList(InputStream inp) {
         try {
+            boolean supportsbatch = dbBean.getDb().getMetaData().supportsBatchUpdates();
+            supportsbatch = false;
+
             Statement st0 = getDbBean().getStatement();
-            st0.execute("delete from " + schema + "station)");
+            st0.execute("delete from " + schema + "station");
             st0.close();
 
             String sql = "insert into " + schema
                     + "station(stat, name, hoehe, aktiv_von, aktiv_bis, latitude, longitude) values(?,?,?,?,?,?,?)";
 
-            PreparedStatement st = dbBean.getDb().prepareStatement(sql);
+            PreparedStatement pst = dbBean.getDb().prepareStatement(sql);
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(inp, "ISO8859-1"));
 
             int lineNr = 0;
 
+
             while (rd.ready()) {
 
                 String line = rd.readLine();
 
-                if (line.charAt(0) != ' ') {
+                if (!Character.isDigit(line.charAt(0))) {
                     continue;
                 }
 
-                int statId = Integer.valueOf(line.substring(5, 11).trim());
+                int statId = Integer.valueOf(line.substring(0, 5).trim());
 
-                Date aktiv_von = toDate(line.substring(12, 20));
-                Date aktiv_bis = toDate(line.substring(21, 29));
+                Date aktiv_von = toDate(line.substring(6, 14));
+                Date aktiv_bis = toDate(line.substring(15, 23));
 
-                double lat = Double.valueOf(line.substring(48, 56));
-                double lng = Double.valueOf(line.substring(58, 66));
+                double lat = Double.valueOf(line.substring(42, 50));
+                double lng = Double.valueOf(line.substring(52, 60));
 
-                int hoehe = Integer.valueOf(line.substring(40, 44).trim());
-                String name = line.substring(67, 108).trim();
+                int hoehe = Integer.valueOf(line.substring(34, 38).trim());
+                String name = line.substring(61, 102).trim();
 
-                st.setInt(1, statId);
-                st.setString(2, name);
-                st.setInt(3, hoehe);
-                st.setDate(4, aktiv_von);
-                st.setDate(5, aktiv_bis);
-                st.setDouble(6, lat);
-                st.setDouble(7, lng);
+                pst.setInt(1, statId);
+                pst.setString(2, name);
+                pst.setInt(3, hoehe);
+                pst.setString(4, aktiv_von.toString());
+                pst.setString(5, aktiv_bis.toString());
+                pst.setDouble(6, lat);
+                pst.setDouble(7, lng);
 
-                st.addBatch();
+                if (supportsbatch) {
+                    pst.addBatch();
+                } else {
+                    pst.executeUpdate();
+                }
 
                 lineNr++;
                 if (lineNr % 100 == 0) {
-                    execBatch(st);
-                    System.err.println("read " + lineNr + " lines");
+                    if (supportsbatch) {
+                        pst.executeBatch();
+                    }
+                    Log.i("importList","read " + lineNr + " lines");
                 }
             }
-
-            execBatch(st);
-            st.close();
+            if (supportsbatch) {
+                execBatch(pst);
+            }
+            pst.close();
 
         } catch (BatchUpdateException e) {
             e.getNextException().printStackTrace();
@@ -480,7 +491,7 @@ public class StationUpdater {
 
     private Date toDate(String d) {
         Calendar cal = new GregorianCalendar();
-        cal.set(Integer.valueOf(d.substring(0, 4)), Integer.valueOf(d.substring(4, 6)), Integer.valueOf(d.substring(6, 8)));
+        cal.set(Integer.valueOf(d.substring(0, 4)), Integer.valueOf(d.substring(4, 6))-1, Integer.valueOf(d.substring(6, 8)));
         return new Date(cal.getTimeInMillis());
     }
 

@@ -24,7 +24,7 @@ public class UpdateTask extends AsyncTask<KlimaStatActivity, String, KlimaStatAc
     private Calendar trimDat = null;
 
 
-    public enum Operation {upd_alle, upd_this, del_this, import_one}
+    public enum Operation {upd_alle, upd_this, del_this, import_one, import_stats}
 
     ;
     Operation operation;
@@ -63,6 +63,10 @@ public class UpdateTask extends AsyncTask<KlimaStatActivity, String, KlimaStatAc
             case del_this:
                 result = upd.deleteTageswerte(activity.getStation().getSelStat().getStat());
                 break;
+            case import_stats:
+                upd.insertStationen();
+                result = "Liste";
+                break;
         }
 
         upd.updateStationAktuell();
@@ -90,7 +94,7 @@ public class UpdateTask extends AsyncTask<KlimaStatActivity, String, KlimaStatAc
             progress.dismiss();
         }
 
-        if (operation != Operation.del_this) {
+        if (operation != Operation.del_this && operation != Operation.del_this.import_stats) {
             stf.showUpdateResult(result);
         }
 

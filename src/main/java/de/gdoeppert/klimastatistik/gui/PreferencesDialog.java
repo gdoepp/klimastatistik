@@ -50,7 +50,11 @@ public class PreferencesDialog extends DialogFragment implements OnClickListener
         settings = activity.getSettings();
 
         vgljahr = settings.vglJahr;
-        if (activity != null && vgljahr < 0) vgljahr = activity.getStation().getSelStat().getJahr2() - 1;
+        if (activity != null && vgljahr < 0 && activity.getStation() != null && activity.getStation().getSelStat() != null) {
+            vgljahr = activity.getStation().getSelStat().getJahr2() - 1;
+        } else {
+            vgljahr = 2016;
+        }
 
 
         EditText edVgljahr = addSettingsWin(layout, R.id.vgljahr, R.id.vgljahr_decr, R.id.vgljahr_incr, false);

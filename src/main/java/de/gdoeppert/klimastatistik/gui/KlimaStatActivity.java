@@ -33,6 +33,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Vector;
 
 import de.gdoeppert.klima.model.DbBase;
@@ -126,11 +127,25 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
         list.setVisibility(View.VISIBLE);
         setDiagramAdapter(list);
 
-        Criteria whatFor = new Criteria();
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        providerName = locationManager.getBestProvider(whatFor, true);
-        location = locationManager.getLastKnownLocation(providerName);
+        checkLocation();
+    }
 
+    private void checkLocation() {
+        Criteria whatFor = new Criteria();
+        whatFor.setAccuracy(Criteria.ACCURACY_COARSE);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        List<String> providers = locationManager.getProviders(whatFor, false);
+        for (String provider : providers) {
+            location = locationManager.getLastKnownLocation(provider);
+            locationManager.requestLocationUpdates(provider, 120000, 1000, this);
+
+            if (locationManager.isProviderEnabled(provider) && location != null) {
+                providerName = provider;
+                Log.d("KlimaActivity", "location: " + location.getLatitude() + ", " + location.getLongitude());
+                Log.i("KlimaActivity", "location provider " + providerName);
+                break;
+            }
+        }
     }
 
     // Menu listener
@@ -357,8 +372,10 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("KlimaActivity", "request location updates");
-        locationManager.requestLocationUpdates(providerName, 120000, 1, this);
+        if (providerName != null && !providerName.equals("")) {
+            Log.i("KlimaActivity", "request location updates");
+            locationManager.requestLocationUpdates(providerName, 120000, 1, this);
+        }
 
         try {
             FileInputStream fis = openFileInput("preferences.txt");
@@ -392,6 +409,7 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
                 }
             }
             setDirty();
+
         } catch (NumberFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -418,7 +436,9 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
             pr.println("winTrdTemp=" + settings.winTrdTemp);
             pr.println("gradSchwelle=" + settings.gradSchwelle);
             pr.println("gradTemp=" + settings.gradTemp);
-            pr.println("statsel=" + getStation().getSelStat().getStat());
+            if (getStation() != null && getStation().getSelStat() != null) {
+                pr.println("statsel=" + getStation().getSelStat().getStat());
+            }
             pr.println("jahre=" + settings.jahre.name());
             pr.println("gradTageJahre=" + (settings.heizmodusJahr ? "Jahr" : "Winter"));
 
@@ -432,8 +452,11 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
     // location listener
     @Override
     public void onLocationChanged(Location location) {
-        this.location = location;
-        Log.d("KlimaActivity", "location: " + location.getLatitude() + ", " + location.getLongitude());
+        if (location != null) {
+            this.location = location;
+            this.providerName = location.getProvider();
+            Log.d("KlimaActivity", "location: " + location.getLatitude() + ", " + location.getLongitude());
+        }
     }
 
     // location listener
@@ -444,6 +467,7 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
     // location listener
     @Override
     public void onProviderEnabled(String s) {
+        checkLocation();
     }
 
     // location listener
@@ -476,7 +500,9 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
         Log.println(Log.DEBUG, "KlimaActivity", "on save instance state");
 
         outState.putInt("currentTab", mViewPager.getCurrentItem());
-        outState.putInt("currentStat", station.getSelStat().getStat());
+        if (station.getSelStat() != null) {
+            outState.putInt("currentStat", station.getSelStat().getStat());
+        }
         outState.putLong("currentDate", heute.getTimeInMillis());
 
         mSectionsPagerAdapter.saveState(outState);
@@ -523,7 +549,7 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
     private DbBase dbB;
     private Station station;
     private LocationManager locationManager;
-    private String providerName;
+    private String providerName = null;
     private Location location = null;
     private Stat statSelected = null;
     private boolean stationsDirty = false;

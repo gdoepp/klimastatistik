@@ -47,25 +47,29 @@ public class StationUpdaterFromINet extends StationUpdater implements Closeable 
         Log.i("UpdaterNet", "ftp passv rc = " + rc);
     }
 
-    public void insertStationen() throws IOException {
+    public void insertStationen()  {
         int rc;
         if (ftpClient == null) return;
-        ftpClient.setFileType(FTPClient.ASCII_FILE_TYPE);
-        rc = ftpClient.getReplyCode();
-        System.err.println("ftp ascii rc = " + rc);
-        ftpClient.setBufferSize(102400);
-
-        InputStream finList = ftpClient.retrieveFileStream(
-                "/pub/CDC/observations_germany/climate/daily/kl/recent/KL_Tageswerte_Beschreibung_Stationen.txt");
-
-        rc = ftpClient.getReplyCode();
-        Log.i("UpdaterNet", "ftp retrieve rc = " + rc);
-        if (rc == 150) {
-            insertStationList(finList);
-            finList.close();
-            ftpClient.completePendingCommand();
+        try {
+            ftpClient.setFileType(FTPClient.ASCII_FILE_TYPE);
             rc = ftpClient.getReplyCode();
-            Log.i("UpdaterNet", "ftp complete rc = " + rc);
+            System.err.println("ftp ascii rc = " + rc);
+            ftpClient.setBufferSize(102400);
+
+            InputStream finList = ftpClient.retrieveFileStream(
+                    "/pub/CDC/observations_germany/climate/daily/kl/recent/KL_Tageswerte_Beschreibung_Stationen.txt");
+
+            rc = ftpClient.getReplyCode();
+            Log.i("UpdaterNet", "ftp retrieve rc = " + rc);
+            if (rc == 150) {
+                insertStationList(finList);
+                finList.close();
+                ftpClient.completePendingCommand();
+                rc = ftpClient.getReplyCode();
+                Log.i("UpdaterNet", "ftp complete rc = " + rc);
+            }
+        } catch(IOException ex) {
+            ex.printStackTrace();
         }
 
     }
@@ -141,13 +145,13 @@ public class StationUpdaterFromINet extends StationUpdater implements Closeable 
                 String pathname = "/pub/CDC/observations_germany/climate/daily/kl/historical";
 
                 // /pub/CDC/observations_germany/climate/daily/kl/recent/tageswerte_KL_02627_akt.zip
-
+                // /pub/CDC/observations_germany/climate/daily/kl/historical/
                 try {
                     ftpClient.changeWorkingDirectory(pathname);
                     FTPFile[] files = ftpClient.listFiles();
                     filename = null;
                     for (FTPFile f : files) {
-                        if (f.getName().startsWith("tageswerte_" + statid)) {
+                        if (f.getName().startsWith("tageswerte_KL_" + statid)) {
                             filename = f.getName();
                             break;
                         }

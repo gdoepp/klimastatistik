@@ -19,7 +19,7 @@ public abstract class KlimaHandler {
     public abstract Vector<?> doWork();
 
     protected void startWork() {
-        if (activity != null) {
+        if (activity != null && activity.getStation().getSelStat() != null) {
             stat = activity.getStation().getSelStat().getStat();
         }
         dirty = false;
@@ -35,7 +35,7 @@ public abstract class KlimaHandler {
 
     public boolean needsUpdate() {
         Log.d("KlimaHandler", "check update, dirty: " + dirty + ", activity: " + (activity == null) + ", stat: " + stat);
-        return dirty || activity == null || activity.getStation().getSelStat().getStat() != stat;
+        return dirty || activity == null || activity.getStation().getSelStat() == null || activity.getStation().getSelStat().getStat() != stat;
     }
 
     public abstract int getLayoutId();
