@@ -77,7 +77,7 @@ public class Sommer {
 
     public String calc() throws SQLException {
 
-        Statement st;
+        Statement st=null;
         try {
             st = dbBean.getStatement();
 
@@ -124,6 +124,12 @@ public class Sommer {
             rs.close();
         } catch (Exception ex) {
             ex.printStackTrace();
+        } finally {
+            try {
+                if (st != null && !st.isClosed()) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return "ok";
     }

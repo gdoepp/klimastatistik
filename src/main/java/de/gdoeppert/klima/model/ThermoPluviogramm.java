@@ -25,7 +25,7 @@ public class ThermoPluviogramm {
 
     public boolean calcForStat() {
 
-        Statement st;
+        Statement st=null;
         try {
             st = dbBean.getStatement();
 
@@ -58,6 +58,12 @@ public class ThermoPluviogramm {
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        } finally {
+            try {
+                if (st != null && !st.isClosed()) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         System.err.println("thermoPluviogramm ok");
         return true;

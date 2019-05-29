@@ -27,7 +27,7 @@ public class TrendView extends ViewHandler {
     public void doDraw(Paint painter, Canvas canvas) {
         if (tgWerte == null) return;
         try {
-            trendDia.makeSvg(tgWerte, new AndroidGraphicsWriter(getActivity().getResources().getDimension(R.dimen.sp20), painter, canvas));
+            trendDia.makeSvg(tgWerte, new AndroidGraphicsWriter(getActivity().getResources().getDimension(R.dimen.textsize), painter, canvas));
         } catch (IOException e) {
             e.printStackTrace();
         }

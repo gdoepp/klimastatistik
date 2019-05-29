@@ -160,7 +160,7 @@ public class MonatsmittelTemp {
     }
 
     public String calc() throws SQLException {
-        Statement st;
+        Statement st=null;
         try {
             st = dbBean.getStatement();
 
@@ -180,6 +180,12 @@ public class MonatsmittelTemp {
             }
         } catch (Exception ex) {
 
+        } finally {
+            try {
+                if (st != null && !st.isClosed()) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return "ok";
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,32 @@ public class PreferencesDialog extends DialogFragment implements OnClickListener
     public PreferencesDialog() {
 
     }
+
+    private int getIntVal(EditText ed) {
+        String str = ed.getText().toString();
+        if (str.isEmpty()) str = "0";
+        try {
+            int i = Integer.valueOf(str);
+            return i;
+        } catch (NumberFormatException ex) {
+            // ignore
+        }
+        return 0;
+    }
+    private float getFltVal(EditText ed) {
+        String str = ed.getText().toString();
+        if (str.isEmpty()) str = "0";
+        try {
+            float f = Float.valueOf(str);
+            return f;
+        } catch (NumberFormatException ex) {
+            // ignore
+        }
+        return 0;
+    }
+
+
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -99,27 +126,28 @@ public class PreferencesDialog extends DialogFragment implements OnClickListener
         onok.setOnClickListener(new OnClickListener() {
            final KlimaStatActivity.Settings settings = PreferencesDialog.this.settings;
 
+
             @Override
             public void onClick(View arg0) {
 
-
                 EditText edVgljahr = (EditText) layout.findViewById(R.id.vgljahr);
-                settings.vglJahr = Integer.valueOf(edVgljahr.getText().toString());
+                settings.vglJahr = getIntVal(edVgljahr);
 
                 EditText edWinTemp = addSettingsWin(layout, R.id.winTemp, R.id.winTemp_decr, R.id.winTemp_incr, false);
-                settings.winTemp = Integer.valueOf(edWinTemp.getText().toString());
+                settings.winTemp = getIntVal(edWinTemp);
 
                 EditText edWinPhen = addSettingsWin(layout, R.id.winPhen, R.id.winPhen_decr, R.id.winPhen_incr, false);
-                settings.winPhen = Integer.valueOf(edWinPhen.getText().toString());
+
+                settings.winPhen = getIntVal(edWinPhen);
 
                 EditText edWinTrend = addSettingsWin(layout, R.id.winTrend, R.id.winTrend_decr, R.id.winTrend_incr, false);
-                settings.winTrdTemp = Integer.valueOf(edWinTrend.getText().toString());
+                settings.winTrdTemp = getIntVal(edWinTrend);
 
                 EditText edGradTemp = addSettingsWin(layout, R.id.gradt_temp, R.id.gradt_temp_decr, R.id.gradt_temp_incr, true);
-                settings.gradTemp = Float.valueOf(edGradTemp.getText().toString());
+                settings.gradTemp = getFltVal(edGradTemp);
 
                 EditText edGradSchw = addSettingsWin(layout, R.id.gradt_schw, R.id.gradt_schw_decr, R.id.gradt_schw_incr, true);
-                settings.gradSchwelle = Float.valueOf(edGradSchw.getText().toString());
+                settings.gradSchwelle = getFltVal(edGradSchw);
 
                 RadioButton rb = (RadioButton) layout.findViewById(R.id.gradt_jahr);
                 settings.setHeizmodusJahr(rb.isChecked());
@@ -163,7 +191,10 @@ public class PreferencesDialog extends DialogFragment implements OnClickListener
     }
 
     private EditText addSettingsWin(View layout, int winId, int decrId, int incrId, final boolean isFloat) {
+
         final EditText edWin = (EditText) layout.findViewById(winId);
+
+        edWin.setInputType(InputType.TYPE_CLASS_NUMBER | (isFloat ? InputType.TYPE_NUMBER_FLAG_DECIMAL: InputType.TYPE_DATETIME_VARIATION_NORMAL));
 
         final Button onwinminus = (Button) layout.findViewById(decrId);
 
@@ -172,12 +203,12 @@ public class PreferencesDialog extends DialogFragment implements OnClickListener
             @Override
             public void onClick(View arg0) {
                 if (isFloat) {
-                    float win = Float.valueOf(edWin.getText().toString());
+                    float win = getFltVal(edWin);
                     win -= 0.25;
                     edWin.setText(String.valueOf(win));
 
                 } else {
-                    int win = Integer.valueOf(edWin.getText().toString());
+                    int win = getIntVal(edWin);
                     if (win > 0) {
                         win--;
                     }
@@ -193,14 +224,16 @@ public class PreferencesDialog extends DialogFragment implements OnClickListener
             @Override
             public void onClick(View arg0) {
                 if (isFloat) {
-                    float win = Float.valueOf(edWin.getText().toString());
-                    win += 0.25;
-                    edWin.setText(String.valueOf(win));
+
+                        float win = getFltVal(edWin);
+                        win += 0.25;
+                        edWin.setText(String.valueOf(win));
 
                 } else {
-                    int win = Integer.valueOf(edWin.getText().toString());
-                    win++;
-                    edWin.setText(String.valueOf(win));
+                        int win = getIntVal(edWin);
+                        win++;
+                        edWin.setText(String.valueOf(win));
+
                 }
             }
         });

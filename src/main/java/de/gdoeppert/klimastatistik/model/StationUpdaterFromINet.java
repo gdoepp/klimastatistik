@@ -30,7 +30,7 @@ public class StationUpdaterFromINet extends StationUpdater implements Closeable 
 
         ftpClient = new FTPClient();
         try {
-            ftpClient.connect("ftp-cdc.dwd.de");
+            ftpClient.connect("opendata.dwd.de");
             ftpClient.login("anonymous", "gd");
             ftpClient.setKeepAlive(true);
         } catch (IOException e) {
@@ -57,7 +57,7 @@ public class StationUpdaterFromINet extends StationUpdater implements Closeable 
             ftpClient.setBufferSize(102400);
 
             InputStream finList = ftpClient.retrieveFileStream(
-                    "/pub/CDC/observations_germany/climate/daily/kl/recent/KL_Tageswerte_Beschreibung_Stationen.txt");
+                    "/climate_environment/CDC/observations_germany/climate/daily/kl/recent/KL_Tageswerte_Beschreibung_Stationen.txt");
 
             rc = ftpClient.getReplyCode();
             Log.i("UpdaterNet", "ftp retrieve rc = " + rc);
@@ -142,7 +142,7 @@ public class StationUpdaterFromINet extends StationUpdater implements Closeable 
 
 
             if (historical) {
-                String pathname = "/pub/CDC/observations_germany/climate/daily/kl/historical";
+                String pathname = "/climate_environment/CDC/observations_germany/climate/daily/kl/historical";
 
                 // /pub/CDC/observations_germany/climate/daily/kl/recent/tageswerte_KL_02627_akt.zip
                 // /pub/CDC/observations_germany/climate/daily/kl/historical/
@@ -162,7 +162,7 @@ public class StationUpdaterFromINet extends StationUpdater implements Closeable 
                 }
 
             } else {
-                String pathname = "/pub/CDC/observations_germany/climate/daily/kl/recent";
+                String pathname = "/climate_environment/CDC/observations_germany/climate/daily/kl/recent";
                 try {
                     ftpClient.changeWorkingDirectory(pathname);
                 } catch (IOException e) {

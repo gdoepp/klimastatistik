@@ -74,7 +74,7 @@ public class JahresverlaufTemp {
             fenster = jahresverlauf.getFensterVerl();
         }
 
-        Statement st;
+        Statement st=null;
         try {
             st = dbBean.getStatement();
 
@@ -97,6 +97,12 @@ public class JahresverlaufTemp {
             // TODO Auto-generated catch block
             e.printStackTrace();
             return "failure";
+        } finally {
+            try {
+                if (st != null && !st.isClosed()) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return "ok";
     }

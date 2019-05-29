@@ -241,6 +241,8 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
     public void showMessage(String title, String msg) {
 
         FragmentManager fm = getSupportFragmentManager();
+        if (fm.isDestroyed()) return;
+
         MessageDialog messageDialog = new MessageDialog();
         messageDialog.setMessage(title, msg); //$NON-NLS-1$
         messageDialog.show(fm, "messageDialog"); //$NON-NLS-1$
@@ -248,7 +250,9 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
 
     public void showUpdateResult(String statIds) {
 
-        showMessage("Aktualisieren", "Es wurden folgende Stationen aktualisiert:\n" + statIds);
+        if (!paused) {
+            showMessage("Aktualisieren", "Es wurden folgende Stationen aktualisiert:\n" + statIds);
+        }
     }
 
     public void setStationenDirty() {
@@ -415,6 +419,7 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
         } catch (IOException e) {
             e.printStackTrace();
         }
+        paused = false;
     }
 
     /**
@@ -422,6 +427,7 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
      */
     @Override
     protected void onPause() {
+        paused = true;
         super.onPause();
         locationManager.removeUpdates(this);
 
@@ -555,4 +561,5 @@ public class KlimaStatActivity extends AppCompatActivity implements LocationList
     private boolean stationsDirty = false;
     private Calendar heute = new GregorianCalendar();
     private int helpID = 0;
+    private boolean paused = false;
 }

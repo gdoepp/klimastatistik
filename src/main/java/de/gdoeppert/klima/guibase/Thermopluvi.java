@@ -30,7 +30,7 @@ public class Thermopluvi {
         float[] monlen = new float[mon.length];
 
         for (int j = 1; j < mon.length; j++) {
-            monlen[j - 1] = writer.calcRectText(mon[j], 12).w;
+            monlen[j - 1] = writer.calcRectText(mon[j], 10).w;
         }
 
         Integer[] monidx = new Integer[monate.size()];
@@ -149,14 +149,14 @@ public class Thermopluvi {
 
         writer.writePath(fpathy, "black", 2);
 
-        writer.writeText(x2, y0, String.format("%4.1f°", mxx), "black", 12);
+        writer.writeText(x2, y0, String.format("%4.1f°", mxx), "black", 10);
 
-        writer.writeText(x0, y2 + txtHeight, String.format("%3.0f%%", mxy), "black", 12);
+        writer.writeText(x0, y2 + txtHeight, String.format("%3.0f%%", mxy), "black", 10);
 
         writer.writeText(x1 - 30, y0, String.format("%4.1f°", mnx),
                 "black", 12);
 
-        writer.writeText(x0, y1, String.format("%3.0f%%", mny), "black", 12);
+        writer.writeText(x0, y1, String.format("%3.0f%%", mny), "black", 10);
     }
 
     void drawMonths(IGraphicsWriterBase writer, MonatValTN monat, int monidx)

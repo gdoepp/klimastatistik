@@ -71,6 +71,12 @@ public class Station implements Serializable {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        } finally {
+            try {
+                if (st != null && !st.isClosed() ) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         if (!stationen_i.isEmpty()) {

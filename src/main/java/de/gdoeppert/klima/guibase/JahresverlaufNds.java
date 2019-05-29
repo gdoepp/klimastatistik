@@ -113,7 +113,7 @@ public class JahresverlaufNds {
 
             writer.writePath(path, "black", 1);
             if (j < Math.floor(mxy)) {
-                writer.writeText(65, height - (j - mny) * dmy, j + "", "black", 10);
+                writer.writeText(65, height - (j - mny) * dmy, j + "", "black", 9);
             }
         }
 
@@ -127,7 +127,7 @@ public class JahresverlaufNds {
         int jm = 0;
         for (int j = 0; j < 13; j++) {
 
-            writer.writeText(x1 + 5 + jm * dx, height + 20, ms[j], "black", 10);
+            writer.writeText(x1 + 5 + jm * dx, height + 20, ms[j], "black", 9);
 
             IPath path = writer.createPath();
             path.moveTo(x1 + jm * dx, height + 20);

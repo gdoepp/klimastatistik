@@ -157,7 +157,7 @@ public class JahresverlaufT {
         int jm = 0;
         for (int j = 0; j < 13; j++) {
 
-            writer.writeText(x1 + 5 + jm * dx, height + 20, ms[j], "black", 10);
+            writer.writeText(x1 + 5 + jm * dx, height + 20, ms[j], "black", 9);
 
             IPath path = writer.createPath();
             path.moveTo(x1 + jm * dx, height + 20);

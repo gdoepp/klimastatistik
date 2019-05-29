@@ -27,7 +27,7 @@ public class JahresViewPhen extends ViewHandler {
     public void doDraw(Paint painter, Canvas canvas) {
         if (tgWerte == null) return;
         try {
-            jvln.makeSvg(tgWerte, null, new AndroidGraphicsWriter(getActivity().getResources().getDimension(R.dimen.sp20), painter, canvas));
+            jvln.makeSvg(tgWerte, null, new AndroidGraphicsWriter(getActivity().getResources().getDimension(R.dimen.textsize), painter, canvas));
         } catch (IOException e) {
             e.printStackTrace();
         }

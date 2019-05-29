@@ -86,7 +86,7 @@ public class Gradtage implements Serializable {
 
     public boolean calc(String w_s) throws SQLException {
 
-        Statement st;
+        Statement st=null;
         try {
             st = dbBean.getStatement();
 
@@ -185,7 +185,14 @@ public class Gradtage implements Serializable {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (st != null && !st.isClosed()) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
         return true;
     }
 

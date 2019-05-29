@@ -124,7 +124,7 @@ public class MonatsmittelNds {
     }
 
     public String calc() throws SQLException {
-        Statement st;
+        Statement st=null;
         try {
             st = dbBean.getStatement();
 
@@ -144,6 +144,12 @@ public class MonatsmittelNds {
             }
         } catch (Exception ex) {
 
+        } finally {
+            try {
+                if (st != null && !st.isClosed()) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return "ok";
     }

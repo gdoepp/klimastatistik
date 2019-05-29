@@ -98,7 +98,7 @@ public class Frostindex implements Serializable {
 
     public String calc() throws SQLException {
 
-        Statement st;
+        Statement st=null;
         try {
             st = dbBean.getStatement();
 
@@ -155,6 +155,13 @@ public class Frostindex implements Serializable {
         } catch (SQLException ex) {
             ex.printStackTrace();
             return "nok";
+        }
+        finally {
+            try {
+                if (st != null && !st.isClosed()) st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 

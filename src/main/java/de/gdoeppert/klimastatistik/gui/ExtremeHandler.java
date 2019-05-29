@@ -173,7 +173,7 @@ public class ExtremeHandler extends WerteHandler {
 
         int cap2[] = {R.id.extremePhen, R.id.extremePhenMonat};
 
-        for (int g = 0; g < tvv.size(); g++) {
+        for (int g = 0; g < tvv.size() && g < 2; g++) {
 
             Extreme.Tval tv = tvv.get(g);
 

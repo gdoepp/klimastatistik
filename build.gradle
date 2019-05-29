@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 26
+    buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "de.gdoeppert.klimastatistik"
         minSdkVersion 16
-        targetSdkVersion 22
-        versionCode 13
-        versionName '1.13'
+        targetSdkVersion 26
+        versionCode 17
+        versionName '1.17'
     }
     buildTypes {
         release {
@@ -23,12 +23,15 @@ android {
     productFlavors {
     }
 }
-
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+    maven{url 'https://maven.google.com'}
+}
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:design:22.2.1'
-    compile 'org.sqldroid:sqldroid:1.0.3'
-    compile files('libs/org.apache.commons.net_3.2.0.v201305141515.jar')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    implementation 'org.sqldroid:sqldroid:1.0.3'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
+    implementation files('libs/org.apache.commons.net_3.2.0.v201305141515.jar')
 }
